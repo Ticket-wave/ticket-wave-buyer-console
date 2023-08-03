@@ -1,0 +1,157 @@
+@import "./variables";
+@import "./reusables";
+
+.footerContainer {
+    @include sectionPadding;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    background-color: $dark-grey;
+    display: flex;
+    align-items: flex-start;
+    color: $white;
+    gap: 3.25rem;
+    @include tablet {
+        flex-direction: column;
+    }
+
+    .lhs {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        width: 30%;
+        min-width: 30%;
+        font-weight: $fontWeight-300;
+        // color: $black;
+        // flex-basis: 25%;
+        @include tablet {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        &__logoArea {
+            display: flex;
+            align-items: center;
+            gap: .25rem;
+            .logoImage {
+                width: 2rem;
+                height: 2rem;
+            }
+            .name {
+                font-size: $font-size-16 - .125rem;
+            }
+        }
+        &__info {
+            p {
+                font-size: $font-size-16 - .188rem;
+                font-weight: $fontWeight-100;
+            }
+        }
+        &__socials {
+            display: flex;
+            gap: .625rem;
+            align-items: center;
+
+            span {
+                display: inline-flex;
+                cursor: pointer;
+                &:hover {
+                    svg {
+                        transform: translateY(-0.25rem);
+                    }
+                }
+                svg {
+                    margin: auto;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+        }
+    }
+
+    .rhs {
+        display: flex;
+        align-items: flex-start;
+        gap: 2.625rem;
+        width: fit-content;
+        @include tablet {
+            flex-direction: column;
+        }
+
+        .content {
+            
+            h4 {
+                margin-bottom: 1.25rem;
+                white-space: nowrap;
+                width: fit-content;
+                color: $primary-color-sub;
+                font-weight: $fontWeight-500;
+            }
+            &__links {
+                display: flex;
+                flex-direction: column;
+                gap: .5rem;
+                li {
+                    list-style: none;
+                    white-space: nowrap;
+                    margin-bottom: .25rem;
+                    font-size: $font-size-16 - .25rem;
+                    font-weight: $fontWeight-200;
+                    @include tablet {
+                        font-size: $font-size-16 - .125rem;
+                    }
+                }
+            }
+            .joinText {
+                width: 100%;
+                font-size: $font-size-16 - .25rem;
+                font-weight: $fontWeight-200;
+                margin-bottom: 1.25rem;
+            }
+            &__subscribeArea {
+                display: flex;
+                align-items: center;
+                width: fit-content;
+                border-radius: 1.5rem;
+                overflow: hidden;
+                background-color: $white;
+                gap: 0rem;
+                // border: 1.008px solid #000;
+                input {
+                    padding: .625rem;
+                    padding-left: 1rem;
+                    border-radius: 1.5rem;
+                    outline: none;
+                    border: none;
+                    background: transparent;
+                    color: $dark-grey;
+                    &::placeholder {
+                        color: $grey-3;
+                    }
+                }
+                button {
+                    @include primary-button;
+                    border-radius: 1.5rem;
+                    white-space: nowrap;
+                    height: 100%;
+                    min-width: 8.75rem;
+                    padding: .75rem 1.5rem;
+                }
+            }
+        }
+        .content1 {
+            @include tablet {
+                order: 2;
+            }
+        }
+        .content2 {
+            @include tablet {
+                order: 3;
+            }
+        }
+        .content3 {
+            @include tablet {
+                order: 1;
+            }
+        }
+    }
+}
