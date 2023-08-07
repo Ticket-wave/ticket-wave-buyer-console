@@ -3,8 +3,8 @@
 
 .navbarContainer {
     @include sectionPadding;
-    padding-top: .625rem;
-    padding-bottom: .625rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     background-color: $dark-grey;
     display: flex;
     align-items: center;
