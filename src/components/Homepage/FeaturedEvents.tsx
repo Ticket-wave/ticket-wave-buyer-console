@@ -29,13 +29,13 @@ const FeaturedEvents: FunctionComponent<FeaturedEventsProps> = (): ReactElement 
                         <div className={styles.event}>
                             <div className={styles.backgroundImage}>
                                 <Image src={images.ticketbg} alt='Ticket background' />
-                            </div> 
+                            </div>
                             <span className={styles.event__tag}>Latest</span>
                             <div className={styles.event__image}>
                                 <Image src={images.event_flyer} alt='Event flyer' />
                             </div>
                             <span className={styles.hLine}>
-                                <HorizontalLineIcon /> 
+                                <HorizontalLineIcon />
                             </span>
                             <div className={styles.eventInfo}>
                                 <div className={styles.eventInfo__lhs}>
@@ -61,11 +61,9 @@ const FeaturedEvents: FunctionComponent<FeaturedEventsProps> = (): ReactElement 
                             <button>View details</button>
                         </div>)}
                 </div>
-                <div className={styles.eventsContainer__controllers}>
-                    <span><CaretLeftIcon /></span>
-                    <span><CaretRightIcon /></span>
-                </div>
             </div>
+            <span className={styles.controller}><CaretLeftIcon /></span>
+            <span className={styles.controller}><CaretRightIcon /></span>
         </section>
     );
 }

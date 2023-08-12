@@ -21,6 +21,11 @@
         @content;
     }
 }
+@mixin midSizeMobilePhone() {
+    @media (max-width: (25rem)) {
+        @content;
+    }
+}
 @mixin smallmobilePhone() {
     @media (max-width: (20rem)) {
         @content;
@@ -149,9 +154,13 @@
       padding-left: 16%;
       padding-right: 16%;
     }
+    @include smallLaptop() {
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
     @include tablet() {
       // padding: $padding-mobile;
-      padding: 1rem;
+      padding: 1.25rem;
     }
   }
 
