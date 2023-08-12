@@ -207,3 +207,33 @@
         }
     }
 }
+
+.mobileNavbarContainer {
+    @include sectionPadding;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $dark-grey;
+
+    .logo {
+        height: 1.5rem;
+    }
+    .buttons {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        span {
+            width: 40px;
+            height: 40px;
+            border-radius: .625rem;
+            background: rgba(255, 255, 255, 0.10);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            svg {
+                width: 1.2rem;
+                height: 1.2rem;
+            }
+        }
+    }
+}

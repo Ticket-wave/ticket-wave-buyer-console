@@ -11,6 +11,8 @@ import ImageBg8 from "./images/ImageBg8.jpg";
 import rocket from "./images/rocket.png";
 import ticketbg from "./images/ticketbg.png";
 import event_flyer from "./images/event_flyer.jpg";
+import createImage from "./images/createImage.png";
+import createImageMobile from "./images/createImageMobile.png";
 
 export default {
   logoWhite,
@@ -25,5 +27,7 @@ export default {
   ImageBg8,
   rocket,
   ticketbg,
-  event_flyer
+  event_flyer,
+  createImage,
+  createImageMobile
 };
