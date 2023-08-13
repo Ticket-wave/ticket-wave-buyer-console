@@ -8,12 +8,12 @@ import Services from '@/components/Homepage/Services'
 import CreateEvent from '@/components/Homepage/CreateEvent'
 
 export default function Home() {
-  return (
-    <div className={styles.homepage}>
-        <HeroSection />
-        <FeaturedEvents />
-        <Services />
-        <CreateEvent />
-    </div>
-  )
+    return (
+        <div className={styles.homepage}>
+            <HeroSection />
+            <FeaturedEvents />
+            <Services />
+            <CreateEvent />
+        </div>
+    )
 }
