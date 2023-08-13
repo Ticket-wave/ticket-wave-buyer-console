@@ -1,14 +1,15 @@
 import { FunctionComponent, ReactElement } from 'react';
-import styles from '../../styles/Home.module.scss';
+import styles from '../../styles/FeaturedEvents.module.scss';
 import Image from 'next/image';
 import images from '../../../public/images';
 import { CaretLeftIcon, CaretRightIcon, HorizontalLineIcon, LikeIcon, LocationPinIcon, ShareIcon } from '../SVGs/SVGicons';
+import Link from 'next/link';
 
 interface FeaturedEventsProps {
-
+    isNotHomepage?: boolean
 }
 
-const FeaturedEvents: FunctionComponent<FeaturedEventsProps> = (): ReactElement => {
+const FeaturedEvents: FunctionComponent<FeaturedEventsProps> = ({ isNotHomepage }): ReactElement => {
     return (
         <section className={styles.featuredEvents}>
             <div className={styles.topArea}>
@@ -20,7 +21,13 @@ const FeaturedEvents: FunctionComponent<FeaturedEventsProps> = (): ReactElement 
                     <p>Based on the superstar that you are, we have carefully gathered top events for you. </p>
                 </div>
                 <div className={styles.topArea__rhs}>
-                    <button>See all events</button>
+                    {!isNotHomepage &&
+                        <Link href='/events'>
+                            <button>See all events</button>
+                        </Link>}
+                    {isNotHomepage &&
+                        <button>More info</button>
+                    }
                 </div>
             </div>
             <div className={styles.eventsContainer}>
