@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, useEffect, useState } from 'react';
 import styles from '../../styles/Home.module.scss';
 import Image from 'next/image';
 import images from '../../../public/images';
@@ -9,10 +9,50 @@ interface HeroSectionProps {
 }
 
 const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
+
+    const imageList = [
+        {
+            img: images.ImageBg1,
+        },
+        {
+            img: images.ImageBg2,
+        },
+        {
+            img: images.ImageBg3,
+        },
+        {
+            img: images.ImageBg4,
+        },
+        {
+            img: images.ImageBg5,
+        },
+        {
+            img: images.ImageBg6,
+        },
+        {
+            img: images.ImageBg7,
+        },
+        {
+            img: images.ImageBg8,
+        },
+    ]
+
+    const [heroSectionImgIndex, setHeroSectionImgIndex] = useState(0);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setHeroSectionImgIndex((prevIndex) =>
+                prevIndex === imageList.length - 1 ? 0 : prevIndex + 1
+            );
+        }, 5000);
+
+        return () => clearInterval(intervalId);
+    }, [imageList.length]);
+
     return (
         <section className={styles.heroSection}>
             <div className={styles.backgroundImage}>
-                <Image src={images.ImageBg1} alt='People partying' />
+                <Image src={imageList[heroSectionImgIndex].img} alt='People partying' />
             </div>
             <div className={styles.heroSection__lhs}>
                 <div className={styles.textContents}>
@@ -32,7 +72,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                     </div>
                     <div className={styles.inputArea}>
                         <input type="text" placeholder='Event name' />
-                        <div className={styles.searchErrorMsg}><InfoIcon /> <p>Please type the name of the event</p></div>
+                        {/* <div className={styles.searchErrorMsg}><InfoIcon /> <p>Please type the name of the event</p></div> */}
                     </div>
                     <button>Let's search</button>
                 </div>
