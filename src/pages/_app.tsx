@@ -4,6 +4,7 @@ import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
 import Image from 'next/image';
 import images from '../../public/images';
+import NextNProgress from 'nextjs-progressbar';
 
 export default function App({ Component, pageProps }: AppProps) {
     const [loaderIsVisible, setLoaderIsVisible] = useState(true);
@@ -15,9 +16,12 @@ export default function App({ Component, pageProps }: AppProps) {
     }, [])
 
     return <>
-        {!loaderIsVisible && <Layout>
-            <Component {...pageProps} />
-        </Layout>}
+        {!loaderIsVisible && <>        
+            <NextNProgress color="#8133F1" /> 
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            </>}
         {loaderIsVisible && <div className="splashScreen">
             <div className="image">
                 <Image src={images.logoWhite} alt='logo' />
