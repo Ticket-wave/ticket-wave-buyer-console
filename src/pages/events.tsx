@@ -4,12 +4,16 @@ import FeaturedEvents from "@/components/Homepage/FeaturedEvents";
 import Image from "next/image";
 import images from "../../public/images";
 import { CaretLeftIcon, CaretRightIcon, HorizontalLineIcon, LikeIcon, LocationPinIcon, ShareIcon } from "@/components/SVGs/SVGicons";
+import useResponsive from "@/hooks/useResponsiveness copy";
 
 interface AllEventsProps {
 
 }
 
 const AllEvents: FunctionComponent<AllEventsProps> = (): ReactElement => {
+
+    const onMobile = useResponsive();
+
     return (
         <div className={styles.allEventsPage}>
             <section className={styles.heroSection}>
@@ -17,6 +21,7 @@ const AllEvents: FunctionComponent<AllEventsProps> = (): ReactElement => {
                     <video
                         autoPlay
                         loop
+                        muted
                         src="https://res.cloudinary.com/dxwpajciu/video/upload/v1691936875/ticketwave/videos/people_waving_p9tni6.mp4" />
                 </div>
                 <div className={styles.textContents}>
@@ -67,13 +72,13 @@ const AllEvents: FunctionComponent<AllEventsProps> = (): ReactElement => {
                                             <p>House 44A Lasisi, OgunlanaOgunlana</p>
                                         </div>
                                     </div>
-                                    <div className={styles.eventInfo__rhs}>
+                                    {!onMobile &&<div className={styles.eventInfo__rhs}>                                        
                                         <div className={styles.actions}>
                                             <button className={styles.actions__like}><LikeIcon /></button>
                                             <button className={styles.actions__share}><ShareIcon /></button>
                                         </div>
                                         <p className={styles.restriction}>Everyone</p>
-                                    </div>
+                                    </div>}
                                 </div>
                                 <button>View details</button>
                             </div>)}

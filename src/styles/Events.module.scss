@@ -149,6 +149,9 @@
                 display: grid;
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 gap: 1rem;
+                @include bigMobilePhone {
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                }
 
                 .event {
                     display: flex;
@@ -162,6 +165,9 @@
                     @include bigMobilePhone {
                         overflow-x: auto;
                         scroll-snap-align: center;
+                        // border: 1px solid #fff;
+                        min-width: auto;
+                        width: 100%;
                     }
                     .backgroundImage {
                         position: absolute;
@@ -217,6 +223,9 @@
                             display: flex;
                             flex-direction: column;
                             gap: 0.25rem;
+                            @include bigMobilePhone {
+                                width: 100%;
+                            }
                             .title {
                                 font-size: $font-size-16;
                                 font-family: Mona-Sans-Wide, "sans-serif";
@@ -313,6 +322,10 @@
                         @include primary-button;
                         width: 100%;
                         justify-content: center;
+                        &:hover {
+                            background-color: $white;
+                            color: $primary-color;
+                        }
                     }
                 }
             }
