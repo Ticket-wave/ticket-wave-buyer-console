@@ -1,14 +1,21 @@
-import { FunctionComponent, ReactElement, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, FunctionComponent, ReactElement, useEffect, useState } from 'react';
 import styles from '../../styles/Home.module.scss';
 import Image from 'next/image';
 import images from '../../../public/images';
 import { InfoIcon } from '../SVGs/SVGicons';
+import { events } from '../demoData/Events';
+import ComponentLoader from '../Loader/ComponentLoader';
+import { useRouter } from 'next/router';
+import { Event } from '../models/IEvent';
+import Link from 'next/link';
 
 interface HeroSectionProps {
 
 }
 
 const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
+
+    const router = useRouter();
 
     const imageList = [
         {
@@ -38,6 +45,55 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
     ]
 
     const [heroSectionImgIndex, setHeroSectionImgIndex] = useState(0);
+    const [eventName, setEventName] = useState<string>();
+    const [eventNameErrorMsg, setEventNameErrorMsg] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [searchResults, setSearchResults] = useState<Event[]>();
+    const [searchResultsIsVisible, setSearchResultsIsVisible] = useState(false);
+
+    // async function handleEventSearch(e: FormEvent<HTMLFormElement>) {
+    //     e.preventDefault();
+
+    //     if (!eventName) {
+    //         // Show error msg 
+    //         setEventNameErrorMsg(true);
+    //         return;
+    //     }
+
+    //     // Close error msg
+    //     setEventNameErrorMsg(false);
+
+    //     // Spin up loader
+    //     setIsLoading(true);
+
+    //     // const _searchedEvent = events.find((event) => event.title.toLowerCase().includes(eventName.toLowerCase()));
+    //     // console.log(_searchedEvent);
+
+    //     // if (_searchedEvent) {
+    //     //     router.push(`/event/${_searchedEvent?.id}`);
+    //     // }
+    // }
+
+    async function handleEventSearch(e: ChangeEvent<HTMLInputElement>) {
+
+        if(searchResults) {
+            setSearchResultsIsVisible(false);
+        }
+        if (!eventName) {
+            setSearchResultsIsVisible(false);
+            return;
+        }
+        if (e.target.value.length == 0) {
+            setSearchResults(undefined);
+            setSearchResultsIsVisible(false);
+            return;
+        }
+
+        setSearchResultsIsVisible(true);
+        
+        setSearchResults(events.filter((event) => event.title.toLowerCase().includes(eventName.toLowerCase())));
+    }
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -65,17 +121,60 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                 </div>
             </div>
             <div className={styles.heroSection__rhs}>
-                <div className={styles.searchContainer}>
+                <form className={styles.searchContainer}>
                     <div className={styles.textContents}>
                         <p><span>Catch the train,</span> before those tickets get sold out.</p>
                         <p>You can quickly <span>search</span> for an event here.</p>
                     </div>
-                    <div className={styles.inputArea}>
-                        <input type="text" placeholder='Event name' />
-                        {/* <div className={styles.searchErrorMsg}><InfoIcon /> <p>Please type the name of the event</p></div> */}
+                    <div className={styles.inputAreaContainer}>
+                        <div className={styles.inputArea}>
+                            <input
+                                type="text"
+                                value={eventName}
+                                placeholder='Event name'
+                                onChange={(e) => {
+                                    setEventName(e.target.value);
+                                    handleEventSearch(e);
+                                }} />
+                            {eventNameErrorMsg && <div className={styles.searchErrorMsg}><InfoIcon /> <p>Please type the name of the event</p></div>}
+                        </div>
+                        {searchResultsIsVisible &&
+                            <div className={styles.resultsDropdown}>
+                                {searchResults?.map((event, index) =>
+                                    <Link href={`/event/${event.id}`}>
+                                        <div className={styles.eachResult} key={index}>
+                                            <div className={styles.eachResult__top}>
+                                                <h4>{event.title}</h4>
+                                                <h4>12th Jan 2023</h4>
+                                            </div>
+                                            <p>Starting price: &#8358;{event.ticketPrice.amount.toLocaleString()}</p>
+                                        </div>
+                                    </Link>
+                                )}
+                            </div>}
+                        {/* {searchResultsIsVisible && searchResults?.map((event, index) =>
+                            <div className={styles.resultsDropdown}>
+                                <Link href={`/event/${event.id}`}> 
+                                    <div className={styles.eachResult} key={index}>
+                                        <div className={styles.eachResult__top}>
+                                            <h4>{event.title}</h4>
+                                            <h4>12th Jan 2023</h4>
+                                        </div>
+                                        <p>Starting price: &#8358;{event.ticketPrice.amount.toLocaleString()}</p>
+                                    </div>
+                                </Link>
+                            </div>
+                        )} */}
                     </div>
-                    <button>Let's search</button>
-                </div>
+                    {/* <button type="submit" style={isLoading ? { opacity: 0.6, pointerEvents: 'none' } : {}} disabled={isLoading}>
+                        {
+                            isLoading ?
+                                <span style={{ width: '16px', height: '16px', position: 'relative', scale: '2.2' }}><ComponentLoader /></span>
+                                :
+                                <span>Let's search</span>
+                        }
+                    </button> */}
+                </form>
             </div>
             <div className={styles.colors}>
                 <span></span>
