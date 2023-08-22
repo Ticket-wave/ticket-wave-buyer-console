@@ -54,8 +54,14 @@
                     font-weight: 500;
                     font-size: $font-size-35;
                     span {
-                        color: $secondary-color;
+                        // color: $secondary-color;
                         position: relative;
+                        background: linear-gradient(90deg, rgba(253, 253, 255, 100) 100%, rgba(253, 253, 255, 0) 100%);
+                        background-clip: text;
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        // border-right: 2px solid #0065e9;
+                        animation: animateText 4s steps(12) infinite;
                         // &::before {
                         //     content: '';
                         //     position: absolute;
@@ -67,7 +73,7 @@
                         //     border-left: 2px solid #0065e9;
                         //     // padding-left: 0.5px;
                         //     animation: animateText 4s steps(12) infinite;
-                            
+
                         // }
                         // @keyframes animateText {
                         //     40%, 60% {
@@ -77,6 +83,14 @@
                         //         left: 0%;
                         //     }
                         // }
+                        @keyframes animateText {
+                            // 40%, 60% {
+                            // background: linear-gradient(90deg, rgba(253, 253, 255, 100) 100%, rgba(253, 253, 255, 0) 100%);
+                            // }
+                            // to {
+                            // background: linear-gradient(90deg, rgba(253, 253, 255, 0) 0%, rgba(253, 253, 255, 0) 100%);
+                            // }
+                        }
                     }
                 }
                 p {
@@ -187,7 +201,7 @@
                 padding: 1.25rem;
                 border-top: 1.5px solid rgba($white, 0.8);
                 position: relative;
-                overflow: hidden;
+                // overflow: hidden;
                 transform: translateZ(0);
                 display: flex;
                 flex-direction: column;
@@ -196,7 +210,7 @@
                 justify-content: center;
                 box-shadow: 0px 10px 24px 2px rgba(83, 215, 255, 0.15);
                 // box-shadow: 0px 16px 16px 2px rgba(255, 255, 255, 0.52);
-                
+
                 animation: move 1200ms ease-in-out infinite alternate;
 
                 @keyframes move {
@@ -216,31 +230,31 @@
                     position: absolute;
                     z-index: -1;
                 }
-                &::before {
-                    animation: 6s rotate linear infinite alternate;
-                    width: 200%;
-                    height: 200%;
-                    background: conic-gradient(
-                        from 179.82deg at 50% 50%,
-                        rgba(12, 20, 20, 0.06) 0deg,
-                        rgba(89, 0, 159, 0.0689191) 80.63deg,
-                        rgba($primary-color, 0.1) 163.12deg,
-                        rgba($secondary-color, 0.06) 294.38deg,
-                        rgba($primary-color, 0.1) 360deg
-                    );
-                }
-                &::after {
-                    inset: 0;
-                    padding: 1px;
-                    border-radius: var(--border-radius);
-                    // background: linear-gradient(
-                    //     to bottom right,
-                    //     rgba($primary-color, 0.4),
-                    //     rgba($primary-color, 1)
-                    // );
-                    background: linear-gradient(to bottom right, rgba(17, 17, 17, 0.3), rgba(17, 17, 17, 0.3));
-                    background-clip: content-box;
-                }
+                // &::before {
+                //     animation: 6s rotate linear infinite alternate;
+                //     width: 200%;
+                //     height: 200%;
+                //     background: conic-gradient(
+                //         from 179.82deg at 50% 50%,
+                //         rgba(12, 20, 20, 0.06) 0deg,
+                //         rgba(89, 0, 159, 0.0689191) 80.63deg,
+                //         rgba($primary-color, 0.1) 163.12deg,
+                //         rgba($secondary-color, 0.06) 294.38deg,
+                //         rgba($primary-color, 0.1) 360deg
+                //     );
+                // }
+                // &::after {
+                //     inset: 0;
+                //     padding: 1px;
+                //     border-radius: var(--border-radius);
+                //     // background: linear-gradient(
+                //     //     to bottom right,
+                //     //     rgba($primary-color, 0.4),
+                //     //     rgba($primary-color, 1)
+                //     // );
+                //     background: linear-gradient(to bottom right, rgba(17, 17, 17, 0.3), rgba(17, 17, 17, 0.3));
+                //     background-clip: content-box;
+                // }
 
                 .textContents {
                     display: flex;
@@ -254,6 +268,69 @@
                         &:nth-child(2) {
                             font-size: $font-size-16 - 0.125rem;
                             opacity: 0.8;
+                        }
+                    }
+                }
+                .inputAreaContainer {
+                    width: 100%;
+                    position: relative;
+                    .resultsDropdown {
+                        position: absolute;
+                        width: 100%;
+                        top: 2.5rem;
+                        padding: 0.5rem;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.1rem;
+                        border-radius: 0.625rem;
+                        border: 1px solid rgba(255, 255, 255, 0.4);
+                        background: rgba(0, 0, 0, 0.3);
+                        backdrop-filter: blur(10px);
+                        // height: fit-content;
+                        max-height: 160px;
+                        overflow-y: auto;
+                        @include bigMobilePhone {
+                            top: 3rem;
+                        }
+
+                        .eachResult {
+                            border-radius: .375rem;
+                            cursor: pointer;
+                            padding: .5rem;
+                            &:hover {
+                                background: rgba(255, 255, 255, 0.1);
+                            }
+
+                            &__top {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                gap: 1rem;
+                                margin-bottom: .25rem;
+                                h4 {
+                                    font-size: $font-size-16 - 0.125rem;
+                                    font-weight: $fontWeight-500;
+                                    &:nth-child(1) {
+                                        // border: 1px solid #fff;
+                                        width: 100%;
+                                        max-width: 100%;
+                                        overflow: hidden;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;
+                                    }
+                                    &:nth-child(2) {
+                                        min-width: fit-content;
+                                        // border: 1px solid #fff;
+                                        opacity: 0.8;
+                                        font-size: $font-size-16 - 0.25rem;
+                                    }
+                                }
+                            }
+                            p {
+                                font-size: $font-size-16 - 0.2rem;
+                                font-weight: $fontWeight-300;
+                                font-family: "Mona-Sans-Wide", sans-serif;
+                            }
                         }
                     }
                 }
@@ -576,8 +653,8 @@
                 left: 0;
                 width: 100%;
                 display: inline-flex;
-                align-items: end;
-                height: 120.5%;
+                align-items: flex-end;
+                height: 124.5%;
                 @include bigMobilePhone {
                     position: relative;
                     height: 12rem;

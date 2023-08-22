@@ -2,5 +2,238 @@
 @import "./reusables";
 
 .eventDetailsPage {
-    
+    color: $white;
+    background-color: $dark-grey;
+
+    .heroSection {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding-bottom: 3rem;
+        // overflow: hidden;
+
+        .textContents {
+            @include sectionPadding;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            width: 70%;
+            z-index: 2;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            @include bigMobilePhone {
+                width: 100%;
+            }
+            span {
+                border-radius: 0.5rem;
+                padding: 0.25rem 0.5rem;
+                background: rgba(255, 255, 255, 0.1);
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+                width: fit-content;
+                font-size: $font-size-16 - 0.25rem;
+                span {
+                    background-color: transparent;
+                    border: none;
+                    padding: 0;
+                }
+                .img {
+                    width: 1rem;
+                    height: 1rem;
+                }
+            }
+            h2 {
+                font-weight: $fontWeight-500;
+                font-size: $font-size-35;
+                line-height: $font-size-35;
+                @include bigMobilePhone {
+                    font-size: $font-size-30;
+                    line-height: $font-size-30;
+                }
+            }
+        }
+        .video {
+            position: absolute;
+            // border: 2px solid #fff;
+            height: 100%;
+            width: 100%;
+            video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                // object-position: 50% -750%;
+                object-position: bottom;
+            }
+            &::after {
+                content: "";
+                background-color: $white;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                z-index: 2;
+                background: linear-gradient(180deg, #8133f1 0%, #6315d3 100%);
+                opacity: 0.5;
+            }
+        }
+    }
+
+    .eventInfoContainer {
+        @include sectionPadding;
+        z-index: 2;
+        position: relative;
+
+        .mainSection {
+            display: flex;
+            align-items: center;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            background-color: $container-grey;
+            transform: translateY(-2.25rem);
+            gap: 1rem;
+            @include bigMobilePhone {
+                flex-direction: column;
+                transform: translateY(-4rem);
+            }
+            .eventImage {
+                min-width: 30%;
+                width: 30%;
+                min-height: 40vh;
+                height: 100%;
+                border-radius: 1rem;
+                position: relative;
+                border-radius: 1rem;
+                overflow: hidden;
+                display: inline-flex;
+                @include bigMobilePhone {
+                    width: 100%;
+                    min-width: 100%;
+                }
+                img {
+                    object-fit: cover;
+                }
+            }
+            .tag {
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+                padding: 0.25rem 0.75rem;
+                border-radius: 1rem;
+                color: $white;
+                background-color: $primary-color;
+            }
+            .eventDetails {
+                display: flex;
+                align-items: flex-end;
+                gap: 0.25rem;
+                position: relative;
+                width: 100%;
+                height: 100%;
+                min-height: 100%;
+                .leftInfo {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.85rem;
+                    .title {
+                        font-size: $font-size-30;
+                        font-weight: $fontWeight-600;
+                        line-height: $font-size-30;
+                        // font-family: Mona-Sans-Wide, 'sans-serif';
+                    }
+                    .datePosted {
+                        color: $purple-grey;
+                        font-size: $font-size-16 - .25rem;
+                    }
+                    .publisherInfo {
+                        display: flex;
+                        align-items: center;
+                        gap: .35rem;
+                        &__image {
+                            width: 2.5rem;
+                            height: 2.5rem;
+                        }
+                        &__name {
+                            font-size: $font-size-16;
+                            color: $white;
+                            font-weight: $fontWeight-500;
+                        }
+                    }
+                    .dateTime {
+                        display: flex;
+                        align-items: center;
+                        gap: .75rem;
+                        h4 {
+                            font-size: $font-size-16;
+                            font-weight: $fontWeight-500;
+                            color: $white;
+                        }
+                    }
+                    .location {
+                        width: 100%;
+                        p {
+                            font-size: $font-size-16 - .125rem;
+                            color: $white;
+                        }
+                        button {
+                            color: $purple-grey;
+                            text-decoration: underline;
+                            background-color: transparent;
+                            border: none;
+                            outline: none;
+                            cursor: pointer;
+                            &:hover {
+                                opacity: 0.8;
+                            }
+                        }
+                    }
+                    .bottomArea {
+                        display: flex;
+                        gap: .75rem;
+                        .priceArea {
+                            span {
+                                color: $purple-grey;
+                                font-size: $font-size-16 - .125rem;
+                            }
+                            h2 {
+                                font-weight: $fontWeight-600;
+                            }
+                        }
+                        button {
+                            @include primary-button;
+                            border-radius: 2.5rem;
+                            background-color: $white;
+                            color: $black;
+                            font-weight: $fontWeight-500;
+                            font-size: $font-size-18;
+                        }
+                    }
+                }
+                .actionButtons {
+                    width: 8%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.85rem;
+                    .actionButton {
+                        margin-left: auto;
+                        width: 2.5rem;
+                        height: 2.5rem;
+                        border-radius: 100%;
+                        background-color: $white;
+                        display: grid;
+                        place-items: center;
+                        position: relative;
+                        svg {
+                            width: 1rem;
+                            height: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

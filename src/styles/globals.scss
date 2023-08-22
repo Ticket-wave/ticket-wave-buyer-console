@@ -112,3 +112,39 @@ img {
         }
     }
 }
+
+.tooltipWrapper {
+    position: relative;
+    cursor: pointer;
+    .tooltip {
+        pointer-events: none;
+        font-size: $font-size-16 - .25rem;
+        white-space: nowrap;
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        opacity: 0;
+        transform: translate(0%, -50%);
+        background-color: $dark-grey;
+        padding: .35rem 0.6rem .3rem;
+        border-radius: .4rem;
+        &::after {
+            content: '';
+            background-color: $dark-grey;
+            position: absolute;
+            right: 0%;
+            top: 45%;
+            transform: translate(0%, -50%);
+            width: .5rem;
+            height: .5rem;
+            rotate: 45deg;
+            z-index: -1;
+        }
+    }
+    &:hover {
+        .tooltip {
+            right: 110%;
+            opacity: 1;
+        }
+    }
+}
