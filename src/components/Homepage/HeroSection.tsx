@@ -8,6 +8,7 @@ import ComponentLoader from '../Loader/ComponentLoader';
 import { useRouter } from 'next/router';
 import { Event } from '../models/IEvent';
 import Link from 'next/link';
+import moment from "moment"; 
 
 interface HeroSectionProps {
 
@@ -145,7 +146,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                                         <div className={styles.eachResult} key={index}>
                                             <div className={styles.eachResult__top}>
                                                 <h4>{event.title}</h4>
-                                                <h4>12th Jan 2023</h4>
+                                                <h4>{moment(event?.eventDateTime).format("MMM. Do YYYY")}</h4>
                                             </div>
                                             <p>Starting price: &#8358;{event.ticketPrice.amount.toLocaleString()}</p>
                                         </div>
