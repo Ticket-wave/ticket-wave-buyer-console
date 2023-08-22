@@ -71,6 +71,15 @@
                     opacity: 1;
                 }
             }
+            .moreInfoButton {
+                border-radius: 100%;
+                background-color: rgba($white, 0.1);
+                padding: 0;
+                width: 2rem;
+                height: 2rem;
+                display: grid;
+                place-items: center;
+            }
         }
     }
     .eventsContainer {
@@ -246,11 +255,24 @@
                         }
                     }
                 }
-                & > button {
+                & > a {
                     z-index: 2;
                     @include primary-button;
                     width: 100%;
                     justify-content: center;
+                    &:hover {
+                        background-color: $white;
+                        button {
+                            color: $primary-color;
+                        }
+                    }
+                    & > button {
+                        cursor: pointer;
+                        background-color: transparent;
+                        color: $white;
+                        border: none;
+                        outline: none;
+                    }
                 }
             }
         }
