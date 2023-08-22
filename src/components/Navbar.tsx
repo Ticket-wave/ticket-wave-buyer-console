@@ -79,8 +79,12 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
                         </Link>
                         <div className={styles.navbarContainer__rhs}>
                             <ul className={styles.navLinks}>
-                                <li>Home</li>
-                                <li>Events</li>
+                                <Link href='/'>
+                                    <li>Home</li>
+                                </Link>
+                                <Link href='/events'>
+                                    <li>Events</li>
+                                </Link>
                                 <li>Support</li>
                             </ul>
                             <div className={styles.accountSection} ref={navbarDropdownRef}>

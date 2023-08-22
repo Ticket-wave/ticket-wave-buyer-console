@@ -5,6 +5,8 @@ import Image from "next/image";
 import images from "../../public/images";
 import { CaretLeftIcon, CaretRightIcon, HorizontalLineIcon, LikeIcon, LocationPinIcon, ShareIcon } from "@/components/SVGs/SVGicons";
 import useResponsive from "@/hooks/useResponsiveness copy";
+import { events } from "@/components/demoData/Events";
+import EventsGroup from "@/components/events/EventsGroup";
 
 interface AllEventsProps {
 
@@ -32,7 +34,7 @@ const AllEvents: FunctionComponent<AllEventsProps> = (): ReactElement => {
 
             <FeaturedEvents isNotHomepage />
 
-            <section className={styles.allEvents}>
+            {/* <section className={styles.allEvents}>
                 <div className={styles.topArea}>
                     <div className={styles.topArea__lhs}>
                         <div className={styles.main}>
@@ -47,7 +49,7 @@ const AllEvents: FunctionComponent<AllEventsProps> = (): ReactElement => {
                 </div>
                 <div className={styles.eventsContainer}>
                     <div className={styles.eventsContainerCarousel}>
-                        {([...Array(5)]).map((event, index) =>
+                        {events.map((event, index) =>
                             <div className={styles.event}>
                                 <div className={styles.backgroundImage}>
                                     <Image src={images.ticketbg} alt='Ticket background' />
@@ -84,7 +86,8 @@ const AllEvents: FunctionComponent<AllEventsProps> = (): ReactElement => {
                             </div>)}
                     </div>
                 </div>
-            </section>
+            </section> */}
+            <EventsGroup eventsData={events} title="All Events" subText="Dear superstar, below is a list of all events available at the moment." />
         </div>
     );
 }

@@ -1,7 +1,7 @@
-import { Event } from "../constants/IEvent";
-
+import { Event } from "../models/IEvent";
 export const events: Event[] = [
   {
+    id: "gBhRkTnWpYsDfEjA",
     title: "Music Festival",
     dateCreated: "2023-08-03",
     publisher: {
@@ -38,6 +38,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "zXcVmBnRkTjHsDfE",
     title: "Tech Conference",
     dateCreated: "2023-07-20",
     publisher: {
@@ -65,6 +66,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "qWeRtYuIoPbVnMcX",
     title: "Food Festival",
     dateCreated: "2023-06-10",
     publisher: {
@@ -92,6 +94,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "qAzWsXcEdVrFtGbH",
     title: "Art Exhibition",
     dateCreated: "2023-07-02",
     publisher: {
@@ -119,6 +122,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "wXrFtGyHuJiKlNmZ",
     title: "Sports Tournament",
     dateCreated: "2023-06-18",
     publisher: {
@@ -146,6 +150,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "tZyXcVuBnMlKjNhG",
     title: "Fashion Show",
     dateCreated: "2023-08-10",
     publisher: {
@@ -182,6 +187,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "yHnJmKlQwErTyUiO",
     title: "Comedy Night",
     dateCreated: "2023-07-05",
     publisher: {
@@ -209,6 +215,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "mZnXbVcFgHjKlQwE",
     title: "Gaming Expo",
     dateCreated: "2023-06-29",
     publisher: {
@@ -236,6 +243,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "kLjHbGvFcXdZcVmB",
     title: "Health & Wellness Retreat",
     dateCreated: "2023-08-01",
     publisher: {
@@ -263,6 +271,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "wErTyUiOpAsDfGhJ",
     title: "Film Screening",
     dateCreated: "2023-07-12",
     publisher: {
@@ -290,6 +299,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "qAzWsXcEdVrFtGbH",
     title: "Culinary Workshop",
     dateCreated: "2023-08-09",
     publisher: {
@@ -326,6 +336,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "eRfTyUiOpAsDfGhJ",
     title: "Environmental Conference",
     dateCreated: "2023-06-22",
     publisher: {
@@ -353,6 +364,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "mNkLjHbGvFcXdZcV",
     title: "Dance Workshop",
     dateCreated: "2023-07-15",
     publisher: {
@@ -380,6 +392,7 @@ export const events: Event[] = [
     image: "event_image_url.jpg",
   },
   {
+    id: "zXcVbNmRkTjHfGbH",
     title: "Literary Symposium",
     dateCreated: "2023-08-05",
     publisher: {
@@ -398,128 +411,123 @@ export const events: Event[] = [
       country: "USA",
     },
     ticketPrice: {
-      amount: 1800,
+      amount: 1200,
       currency: "NGN",
     },
     ticketTypes: null,
     description:
-      "Engage in thought-provoking discussions and celebrate literature at the Literary Symposium.",
+      "Engage in thought-provoking discussions and explore the world of literature at the Literary Symposium.",
     image: "event_image_url.jpg",
   },
   {
-    title: "Startup Pitch Competition",
-    dateCreated: "2023-07-25",
+    id: "pAsDfGhJkLwErTyU",
+    title: "Science Fair",
+    dateCreated: "2023-06-12",
     publisher: {
-      name: "InnovateHub",
-      joinDate: "2022-06-10",
+      name: "SciTech Innovators",
+      joinDate: "2022-02-28",
       eventsHosted: 5,
       picture: "publisher_image_url.jpg",
     },
-    eventDateTime: "2023-09-28 13:00",
-    eventDate: "2023-09-28",
+    eventDateTime: "2023-08-20 12:00",
+    eventDate: "2023-08-20",
     location: {
       blockNumber: "890",
-      street: "Innovation Street",
-      city: "Startupville",
+      street: "Science Street",
+      city: "Innovationville",
       state: "California",
       country: "USA",
     },
     ticketPrice: {
-      amount: 2500,
-      currency: "NGN",
-    },
-    ticketTypes: [
-      {
-        name: "Participant",
-        price: 2500,
-      },
-      {
-        name: "Observer",
-        price: 1000,
-      },
-    ],
-    description:
-      "Witness innovative ideas and startups compete in the Startup Pitch Competition for a chance to win prizes and support.",
-    image: "event_image_url.jpg",
-  },
-  {
-    title: "Photography Workshop",
-    dateCreated: "2023-08-08",
-    publisher: {
-      name: "ShutterCraft",
-      joinDate: "2022-05-05",
-      eventsHosted: 4,
-      picture: "publisher_image_url.jpg",
-    },
-    eventDateTime: "2023-09-26 11:00",
-    eventDate: "2023-09-26",
-    location: {
-      blockNumber: "123",
-      street: "Photo Lane",
-      city: "Captureville",
-      state: "California",
-      country: "USA",
-    },
-    ticketPrice: {
-      amount: 2200,
+      amount: 1000,
       currency: "NGN",
     },
     ticketTypes: null,
     description:
-      "Learn photography techniques, composition, and post-processing at the hands-on Photography Workshop.",
+      "Explore groundbreaking scientific discoveries and projects at the captivating Science Fair.",
     image: "event_image_url.jpg",
   },
   {
-    title: "Fitness Bootcamp",
-    dateCreated: "2023-07-28",
+    id: "gBhNkLwErTyUqAzWs",
+    title: "Startup Summit",
+    dateCreated: "2023-07-08",
     publisher: {
-      name: "FitLife",
-      joinDate: "2022-05-18",
-      eventsHosted: 7,
+      name: "Innovation Hub",
+      joinDate: "2022-01-15",
+      eventsHosted: 4,
       picture: "publisher_image_url.jpg",
     },
-    eventDateTime: "2023-09-21 07:00",
-    eventDate: "2023-09-21",
+    eventDateTime: "2023-09-28 09:00",
+    eventDate: "2023-09-28",
     location: {
-      blockNumber: "456",
-      street: "Fitness Street",
-      city: "Healthville",
-      state: "Florida",
+      blockNumber: "123",
+      street: "Innovation Avenue",
+      city: "Startuptown",
+      state: "California",
       country: "USA",
     },
     ticketPrice: {
       amount: 2800,
       currency: "NGN",
     },
-    ticketTypes: [
-      {
-        name: "Early Bird",
-        price: 2800,
-      },
-      {
-        name: "Regular",
-        price: 3500,
-      },
-    ],
+    ticketTypes: null,
     description:
-      "Challenge yourself with intense workouts and fitness routines at the energetic Fitness Bootcamp.",
+      "Connect with fellow entrepreneurs, attend workshops, and pitch your startup ideas at the dynamic Startup Summit.",
     image: "event_image_url.jpg",
   },
   {
-    title: "TEDx Conference",
-    dateCreated: "2023-08-15",
+    id: "tYqAzWsXcVbNmRkJ",
+    title: "Tech Expo",
+    dateCreated: "2023-08-14",
     publisher: {
-      name: "Ideas Unleashed",
-      joinDate: "2022-06-15",
+      name: "Tech Innovators",
+      joinDate: "2022-05-10",
       eventsHosted: 5,
       picture: "publisher_image_url.jpg",
     },
-    eventDateTime: "2023-09-29 09:00",
-    eventDate: "2023-09-29",
+    eventDateTime: "2023-10-05 10:00",
+    eventDate: "2023-10-05",
+    location: {
+      blockNumber: "456",
+      street: "Tech Street",
+      city: "Techville",
+      state: "Texas",
+      country: "USA",
+    },
+    ticketPrice: {
+      amount: 2200,
+      currency: "NGN",
+    },
+    ticketTypes: [
+      {
+        name: "Standard",
+        price: 2200,
+      },
+      {
+        name: "VIP",
+        price: 4000,
+      },
+    ],
+    description:
+      "Discover the future of technology and witness innovative tech solutions at the Tech Expo.",
+    image: "event_image_url.jpg",
+  },
+  {
+    id: "bNmRkJqAzWsXcVbY",
+    title: "Education Conference",
+    dateCreated: "2023-08-02",
+    publisher: {
+      name: "EduConnect",
+      joinDate: "2022-03-20",
+      eventsHosted: 4,
+      picture: "publisher_image_url.jpg",
+    },
+    eventDateTime: "2023-10-15 09:30",
+    eventDate: "2023-10-15",
     location: {
       blockNumber: "789",
-      street: "Inspiration Avenue",
-      city: "Thoughtville",
+      street: "Education Avenue",
+      city: "Learningsburg",
       state: "California",
       country: "USA",
     },
@@ -529,62 +537,7 @@ export const events: Event[] = [
     },
     ticketTypes: null,
     description:
-      "Experience a day of thought-provoking talks and ideas worth spreading at the TEDx Conference.",
+      "Explore the latest trends in education, teaching techniques, and more at the Education Conference.",
     image: "event_image_url.jpg",
   },
-  {
-    title: "Science Fair",
-    dateCreated: "2023-08-12",
-    publisher: {
-      name: "SciExplore",
-      joinDate: "2022-04-12",
-      eventsHosted: 6,
-      picture: "publisher_image_url.jpg",
-    },
-    eventDateTime: "2023-09-23 10:00",
-    eventDate: "2023-09-23",
-    location: {
-      blockNumber: "901",
-      street: "Science Street",
-      city: "Innovationburg",
-      state: "Texas",
-      country: "USA",
-    },
-    ticketPrice: {
-      amount: 1800,
-      currency: "NGN",
-    },
-    ticketTypes: null,
-    description:
-      "Explore the wonders of science through interactive exhibits and demonstrations at the engaging Science Fair.",
-    image: "event_image_url.jpg",
-  },
-  {
-    title: "Charity Gala",
-    dateCreated: "2023-08-18",
-    publisher: {
-      name: "Heartfelt Foundation",
-      joinDate: "2022-07-18",
-      eventsHosted: 4,
-      picture: "publisher_image_url.jpg",
-    },
-    eventDateTime: "2023-09-27 19:00",
-    eventDate: "2023-09-27",
-    location: {
-      blockNumber: "234",
-      street: "Hope Avenue",
-      city: "Philanthropyville",
-      state: "New York",
-      country: "USA",
-    },
-    ticketPrice: {
-      amount: 3000,
-      currency: "NGN",
-    },
-    ticketTypes: null,
-    description:
-      "Support a noble cause and enjoy an elegant evening of dining, entertainment, and fundraising at the Charity Gala.",
-    image: "event_image_url.jpg",
-  },
-  // Continue adding more events with similar structure
 ];

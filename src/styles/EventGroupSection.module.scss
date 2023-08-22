@@ -1,7 +1,8 @@
 @import "./variables";
 @import "./reusables";
 
-.featuredEvents {
+
+.allEvents {
     @include sectionPadding;
     padding-top: 4.5rem;
     padding-bottom: 4.5rem;
@@ -9,12 +10,10 @@
     display: flex;
     align-items: flex-start;
     position: relative;
-    color: $white;
-
     @include bigMobilePhone {
         flex-direction: column;
         gap: 2rem;
-        padding-top: 6.5rem;
+        padding-top: 4.5rem;
         padding-bottom: 4.5rem;
     }
 
@@ -49,9 +48,6 @@
                 font-size: $font-size-16 - 0.125rem;
                 width: 80%;
                 opacity: 0.8;
-                @include bigMobilePhone {
-                    width: auto;
-                }
             }
         }
         &__rhs {
@@ -65,20 +61,10 @@
                 opacity: 0.8;
                 font-size: $font-size-16 - 0.125rem;
                 color: $white;
-                white-space: nowrap;
                 &:hover {
                     background-color: rgba($white, 0.1);
                     opacity: 1;
                 }
-            }
-            .moreInfoButton {
-                border-radius: 100%;
-                background-color: rgba($white, 0.1);
-                padding: 0;
-                width: 2rem;
-                height: 2rem;
-                display: grid;
-                place-items: center;
             }
         }
     }
@@ -89,12 +75,11 @@
         overflow: hidden;
 
         .eventsContainerCarousel {
-            display: flex;
-            flex-wrap: nowrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 1rem;
             @include bigMobilePhone {
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
 
             .event {
@@ -109,6 +94,9 @@
                 @include bigMobilePhone {
                     overflow-x: auto;
                     scroll-snap-align: center;
+                    // border: 1px solid #fff;
+                    min-width: auto;
+                    width: 100%;
                 }
                 .backgroundImage {
                     position: absolute;
@@ -164,6 +152,9 @@
                         display: flex;
                         flex-direction: column;
                         gap: 0.25rem;
+                        @include bigMobilePhone {
+                            width: 100%;
+                        }
                         .title {
                             font-size: $font-size-16;
                             font-family: Mona-Sans-Wide, "sans-serif";
@@ -275,31 +266,6 @@
                     }
                 }
             }
-        }
-    }
-    .controller {
-        top: 0;
-        z-index: 2;
-        top: 58%;
-        left: 11%;
-        transform: translateY(-50%);
-        position: absolute;
-
-        display: grid;
-        place-items: center;
-        min-width: 2.5rem;
-        min-height: 2.5rem;
-        border-radius: 100%;
-        background-color: $primary-color;
-        z-index: 2;
-        cursor: pointer;
-        &:nth-of-type(2) {
-            left: auto;
-            right: 11%;
-            // border: 2px solid #fff;
-        }
-        @include bigMobilePhone {
-            display: none;
         }
     }
 }

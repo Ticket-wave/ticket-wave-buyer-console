@@ -13,6 +13,8 @@ import ticketbg from "./images/ticketbg.png";
 import event_flyer from "./images/event_flyer.jpg";
 import createImage from "./images/createImage.png";
 import createImageMobile from "./images/createImageMobile.png";
+import woman_dancing from "./images/woman_dancing.svg";
+import user_avatar from "./images/user_avatar.png";
 
 export default {
   logoWhite,
@@ -29,5 +31,7 @@ export default {
   ticketbg,
   event_flyer,
   createImage,
-  createImageMobile
+  createImageMobile,
+  woman_dancing,
+  user_avatar
 };
