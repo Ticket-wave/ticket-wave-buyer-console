@@ -24,6 +24,7 @@ export interface TicketType {
 }
 
 export interface Event {
+  id: string;
   title: string;
   dateCreated: string;
   publisher: Publisher;
