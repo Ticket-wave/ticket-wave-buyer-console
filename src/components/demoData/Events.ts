@@ -23,16 +23,17 @@ export const events: Event[] = [
       amount: 5000,
       currency: "NGN",
     },
-    ticketTypes: [
-      {
-        name: "General Admission",
-        price: 5000,
-      },
-      {
-        name: "VIP",
-        price: 10000,
-      },
-    ],
+    // ticketTypes: [
+    //   {
+    //     name: "General Admission",
+    //     price: 5000,
+    //   },
+    //   {
+    //     name: "VIP",
+    //     price: 10000,
+    //   },
+    // ],
+    ticketTypes: [],
     description:
       "Join us for a night of music and fun at the annual Music Festival. Enjoy performances from top artists and dance the night away!",
     image: "event_image_url.jpg",
