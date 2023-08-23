@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, FunctionComponent, ReactElement, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, FunctionComponent, ReactElement, useEffect, useState, useRef } from 'react';
 import styles from '../../styles/Home.module.scss';
 import Image from 'next/image';
 import images from '../../../public/images';
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { Event } from '../models/IEvent';
 import Link from 'next/link';
 import moment from "moment"; 
+import useOuterClick from '@/hooks/useOuterClick';
 
 interface HeroSectionProps {
 
@@ -106,6 +107,17 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
         return () => clearInterval(intervalId);
     }, [imageList.length]);
 
+    useEffect(() => {
+        if(!searchResultsIsVisible) {
+            setSearchResults(undefined);
+            setEventName('');
+        }
+    }, [searchResultsIsVisible]);
+
+    const inputAreaContainerRef = useRef<HTMLDivElement>(null);
+
+    useOuterClick(inputAreaContainerRef, setSearchResultsIsVisible);
+
     return (
         <section className={styles.heroSection}>
             <div className={styles.backgroundImage}>
@@ -127,7 +139,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                         <p><span>Catch the train,</span> before those tickets get sold out.</p>
                         <p>You can quickly <span>search</span> for an event here.</p>
                     </div>
-                    <div className={styles.inputAreaContainer}>
+                    <div className={styles.inputAreaContainer} ref={inputAreaContainerRef}>
                         <div className={styles.inputArea}>
                             <input
                                 type="text"

@@ -122,6 +122,8 @@
             @include bigMobilePhone {
                 margin: 0 auto;
                 flex-basis: 100%;
+                width: 100%;
+                margin-top: .75rem;
             }
 
             // .appLoader {
@@ -222,6 +224,7 @@
 
                 @include bigMobilePhone {
                     width: 100%;
+                    padding: 1.5rem 1.25rem;
                 }
 
                 &::before,
@@ -260,14 +263,23 @@
                     display: flex;
                     flex-direction: column;
                     gap: 0.25rem;
+                    @include bigMobilePhone {
+                        text-align: center;
+                    }
                     p {
                         font-size: $font-size-16;
+                        @include bigMobilePhone {
+                            font-size: $font-size-18;
+                        }
                         span {
                             color: $secondary-color;
                         }
                         &:nth-child(2) {
                             font-size: $font-size-16 - 0.125rem;
                             opacity: 0.8;
+                            @include bigMobilePhone {
+                                font-size: $font-size-16 - 0.05rem;
+                            }
                         }
                     }
                 }
@@ -290,7 +302,7 @@
                         max-height: 160px;
                         overflow-y: auto;
                         @include bigMobilePhone {
-                            top: 3rem;
+                            top: 3.35rem;
                         }
 
                         .eachResult {
@@ -351,7 +363,7 @@
                         color: $white;
                         @include bigMobilePhone {
                             font-size: $font-size-16;
-                            padding: 0.65rem;
+                            padding: 0.8rem 0.65rem;
                         }
                     }
                     .searchErrorMsg {
