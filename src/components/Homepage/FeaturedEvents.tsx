@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, useContext } from 'react';
 import styles from '../../styles/FeaturedEvents.module.scss';
 import Image from 'next/image';
 import images from '../../../public/images';
@@ -7,12 +7,50 @@ import Link from 'next/link';
 import { events } from '../demoData/Events';
 import moment from 'moment';
 import Tooltip from '../custom/Tooltip';
+import { ToastContext } from '@/extensions/toast';
+import { Event } from '../models/IEvent';
+import useResponsive from '@/hooks/useResponsiveness copy';
 
 interface FeaturedEventsProps {
     isNotHomepage?: boolean
 }
 
 const FeaturedEvents: FunctionComponent<FeaturedEventsProps> = ({ isNotHomepage }): ReactElement => {
+
+    const toasthandler = useContext(ToastContext);
+    const onMobile = useResponsive(); 
+    
+    function shareEvent(eventInfo: Event) {
+        const eventURL = window.location.href;
+        // const tempInput = document.createElement("input");
+        // document.body.appendChild(tempInput);
+        // tempInput.value = eventURL;
+        // tempInput.select();
+        // document.execCommand("copy");
+        // document.body.removeChild(tempInput);
+        try {
+            navigator.clipboard.writeText(eventURL);
+            // alert("Event link copied to clipboard!");
+            toasthandler?.logSuccess('Event link copied.', `The link to ${eventInfo?.title} has been copied.`)
+        } catch (error) {
+            console.error("Copying to clipboard failed:", error);
+        }
+    }
+    function shareEventMobile() {
+        const eventURL = window.location.href;
+        if (navigator.share) {
+            navigator.share({
+                title: "Check out this event!",
+                text: "I found this amazing event. You should check it out!",
+                url: eventURL
+            })
+                .then(() => console.log("Shared successfully"))
+                .catch(error => console.log("Sharing failed:", error));
+        } else {
+            console.log("Web Share API not supported");
+        }
+    }
+
     return (
         <section className={styles.featuredEvents}>
             <div className={styles.topArea}>
@@ -43,9 +81,11 @@ const FeaturedEvents: FunctionComponent<FeaturedEventsProps> = ({ isNotHomepage 
                 <div className={styles.eventsContainerCarousel}>
                     {events.map((event, index) =>
                         <div className={styles.event} key={index}>
-                            <div className={styles.backgroundImage}>
-                                <Image src={images.ticketbg} alt='Ticket background' />
-                            </div>
+                            {/* <Link href={`/event/${event.id}`}> */}
+                                <div className={styles.backgroundImage}>
+                                    <Image src={images.ticketbg} alt='Ticket background' />
+                                </div>
+                            {/* </Link> */}
                             <span className={styles.event__tag}>Latest</span>
                             <div className={styles.event__image}>
                                 <Image src={images.event_flyer} alt='Event flyer' />
@@ -69,7 +109,7 @@ const FeaturedEvents: FunctionComponent<FeaturedEventsProps> = ({ isNotHomepage 
                                 <div className={styles.eventInfo__rhs}>
                                     <div className={styles.actions}>
                                         <button className={styles.actions__like}><LikeIcon /></button>
-                                        <button className={styles.actions__share}><ShareIcon /></button>
+                                        <button className={styles.actions__share} onClick={() => onMobile ? shareEventMobile() : shareEvent(event)}><ShareIcon /></button>
                                     </div>
                                     <p className={styles.restriction}>Everyone</p>
                                 </div>
