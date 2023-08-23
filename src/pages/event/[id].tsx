@@ -12,6 +12,7 @@ import { ToastContext } from '@/extensions/toast';
 import moment from 'moment';
 import EventsGroup from '@/components/events/EventsGroup';
 import useResponsive from '@/hooks/useResponsiveness copy';
+import Link from 'next/link';
 
 interface EventDetailsProps {
 
@@ -26,6 +27,8 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
 
     const [eventInfo, setEventInfo] = useState<Event>();
     const [loader, setLoader] = useState(false);
+    
+    const eventLocation = eventInfo?.location.blockNumber + ' ' + eventInfo?.location.street + ' ' + eventInfo?.location.city + ', ' + eventInfo?.location.state + ', ' + eventInfo?.location.country;
 
     function shareEvent() {
         const eventURL = window.location.href;
@@ -46,15 +49,28 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
         const eventURL = window.location.href;
         if (navigator.share) {
             navigator.share({
-              title: "Check out this event!",
-              text: "I found this amazing event. You should check it out!",
-              url: eventURL
+                title: "Check out this event!",
+                text: "I found this amazing event. You should check it out!",
+                url: eventURL
             })
-            .then(() => console.log("Shared successfully"))
-            .catch(error => console.log("Sharing failed:", error));
-          } else {
+                .then(() => console.log("Shared successfully"))
+                .catch(error => console.log("Sharing failed:", error));
+        } else {
             console.log("Web Share API not supported");
-          }
+        }
+    }
+    function addEventToGoogleCalender() {
+        if(!eventInfo) {
+            return;
+        }
+        const eventTitle = eventInfo?.title;
+        const eventDate = moment(eventInfo?.eventDateTime).format('YYYY-MM-DD'); // Use the actual event date
+        const eventTime = moment(eventInfo?.eventDateTime).format('HH:MM');      // Use the actual event time
+        const location = eventLocation;
+
+        const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventDate}T${eventTime}%2F${eventDate}T${eventTime}&location=${encodeURIComponent(location)}`;
+
+        window.open(googleCalendarUrl, "_blank");
     }
 
     useEffect(() => {
@@ -63,7 +79,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
             if (_eventInfo) {
                 console.log(_eventInfo);
                 setEventInfo(_eventInfo);
-                toasthandler?.logSuccess('Success', 'Event info retrieved!')
+                // toasthandler?.logSuccess('Success', 'Event info retrieved!')
             } else {
                 // Route to flight not-found page
                 router.push(`/event/not-found`);
@@ -167,7 +183,9 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                             </div>
                             <div className={styles.location}>
                                 <p>{eventInfo?.location.blockNumber + ' ' + eventInfo?.location.street + ' ' + eventInfo?.location.city + ', ' + eventInfo?.location.state + ', ' + eventInfo?.location.country}</p>
-                                <button>Get directions on map</button>
+                                <Link href={`https://www.google.com/maps/search/?api=1&query=${eventInfo?.location.blockNumber},+${eventInfo?.location.street},+${eventInfo?.location.city}+${eventInfo?.location.state}+${eventInfo?.location.country}`} target='_blank'>
+                                    <button>Get directions on map</button>
+                                </Link>
                             </div>
                             <div className={styles.bottomArea}>
                                 {eventInfo?.ticketTypes !== null &&
@@ -180,7 +198,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                         </div>
                         <div className={styles.actionButtons}>
                             <Tooltip tooltipText='Add to calender'>
-                                <div className={styles.actionButton}>
+                                <div className={styles.actionButton} onClick={() => addEventToGoogleCalender()}>
                                     <CalenderIcon />
                                 </div>
                             </Tooltip>
