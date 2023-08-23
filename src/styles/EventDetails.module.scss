@@ -286,6 +286,7 @@
                         background-color: rgba($color: $primary-color-sub-50, $alpha: 0.1);
                         padding: 1.25rem;
                         border-radius: 0.5rem;
+                        border: 0.2rem solid transparent;
                         p {
                             font-size: $font-size-16 - 0.125rem;
                             font-weight: $fontWeight-400;
@@ -319,7 +320,7 @@
                         }
                     }
                     .active {
-                        border: 0.063rem solid $primary-color-sub-50;
+                        border: 0.2rem solid rgba($color: $primary-color-sub-50, $alpha: 0.2);
                     }
                 }
                 .bottomContainer {

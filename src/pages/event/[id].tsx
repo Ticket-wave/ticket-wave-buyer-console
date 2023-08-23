@@ -34,7 +34,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     const [eventInfo, setEventInfo] = useState<Event>();
     const [eventTicketTypes, setEventTicketTypes] = useState<RetrievedTicketType[]>();
     const [loader, setLoader] = useState(false);
-    const [selectedTicketsCount, setSelectedTicketsCount] = useState(eventTicketTypes?.map((ticket) => ticket.selectedTickets));
+    const [selectedTicketsCount, setSelectedTicketsCount] = useState(0);
     const [ticketsSelectionContainerIsVisible, setTicketsSelectionContainerIsVisible] = useState(false);
 
     const eventLocation = eventInfo?.location.blockNumber + ' ' + eventInfo?.location.street + ' ' + eventInfo?.location.city + ', ' + eventInfo?.location.state + ', ' + eventInfo?.location.country;
