@@ -55,6 +55,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [searchResults, setSearchResults] = useState<Event[]>();
+    // const [filteredResults, setFilteredResults] = useState<Event[]>();
     const [searchResultsIsVisible, setSearchResultsIsVisible] = useState(false);
 
     // async function handleEventSearch(e: FormEvent<HTMLFormElement>) {
@@ -82,23 +83,29 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
 
     async function handleEventSearch(e: ChangeEvent<HTMLInputElement>) {
 
-        if (searchResults) {
-            setSearchResultsIsVisible(false);
-        }
-        if (!eventName) {
+        if (!searchResults || !eventName) {
             setSearchResultsIsVisible(false);
             return;
         }
+        // if (!eventName) {
+        //     setSearchResultsIsVisible(false);
+        //     return;
+        // }
         if (e.target.value.length == 0) {
             setSearchResults(undefined);
             setSearchResultsIsVisible(false);
             return;
         }
 
-        setSearchResultsIsVisible(true);
-
-        setSearchResults(events.filter((event) => event.title.toLowerCase().includes(eventName.toLowerCase())));
+        setSearchResultsIsVisible(true); 
+        setSearchResults(events.filter(event => event.title.toLowerCase().includes(eventName.toLowerCase())));
     }
+
+    useEffect(() => {
+        if(eventName) {
+            setSearchResults(events.filter((event) => event.title.toLowerCase().includes(eventName.toLowerCase())));
+        }
+    }, [eventName]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -132,7 +139,9 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                     <p>"From music festivals to sports games, find the perfect tickets for your entertainment needs!"</p>
                 </div>
                 <div className={styles.actionButtons}>
-                    <button className={styles.primaryButton}>Find Event</button>
+                    <Link href={`/events`}>
+                        <button className={styles.primaryButton}>Explore Events</button>
+                    </Link>
                     <button className={styles.secondaryButton}>Host Event</button>
                 </div>
             </div>
@@ -150,6 +159,11 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                                 placeholder='Event name'
                                 onClick={() => onMobile ? scrollWindow(160) : {}}
                                 onChange={(e) => {
+                                    if(e.target.value.length == 1) {
+                                        setEventName(e.target.value);
+                                        setSearchResultsIsVisible(true);
+                                        return;
+                                    }
                                     setEventName(e.target.value);
                                     handleEventSearch(e);
                                 }} />
