@@ -48,6 +48,7 @@
         &__info {
             p {
                 font-size: $font-size-16 - .188rem;
+                line-height: $font-size-18 + .125rem;
                 font-weight: $fontWeight-100;
             }
         }
@@ -109,6 +110,7 @@
             .joinText {
                 width: 100%;
                 font-size: $font-size-16 - .25rem;
+                line-height: $font-size-18 + .125rem;
                 font-weight: $fontWeight-200;
                 margin-bottom: 1.25rem;
             }
