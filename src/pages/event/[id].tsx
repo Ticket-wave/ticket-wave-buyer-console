@@ -6,16 +6,22 @@ import images from '../../../public/images';
 import { CalenderIcon, HeartIcon, ShareIcon } from '@/components/SVGs/SVGicons';
 import Tooltip from '@/components/custom/Tooltip';
 import { events } from '@/components/demoData/Events';
-import { Event } from '@/components/models/IEvent';
+import { Event, TicketType } from '@/components/models/IEvent';
 import ToastCard from '@/components/Card/ToastCard';
 import { ToastContext } from '@/extensions/toast';
 import moment from 'moment';
 import EventsGroup from '@/components/events/EventsGroup';
 import useResponsive from '@/hooks/useResponsiveness copy';
 import Link from 'next/link';
+import { Link as ScrollLink } from 'react-scroll';
 
 interface EventDetailsProps {
 
+}
+
+interface RetrievedTicketType extends TicketType {
+    isSelected: boolean,
+    selectedTickets: number
 }
 
 const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
@@ -26,8 +32,11 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     const toasthandler = useContext(ToastContext);
 
     const [eventInfo, setEventInfo] = useState<Event>();
+    const [eventTicketTypes, setEventTicketTypes] = useState<RetrievedTicketType[]>();
     const [loader, setLoader] = useState(false);
-    
+    const [selectedTicketsCount, setSelectedTicketsCount] = useState(4);
+    const [ticketsSelectionContainerIsVisible, setTicketsSelectionContainerIsVisible] = useState(false);
+
     const eventLocation = eventInfo?.location.blockNumber + ' ' + eventInfo?.location.street + ' ' + eventInfo?.location.city + ', ' + eventInfo?.location.state + ', ' + eventInfo?.location.country;
 
     function shareEvent() {
@@ -60,7 +69,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
         }
     }
     function addEventToGoogleCalender() {
-        if(!eventInfo) {
+        if (!eventInfo) {
             return;
         }
         const eventTitle = eventInfo?.title;
@@ -86,6 +95,18 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
             }
         }
     }, [router.isReady, eventId]);
+
+    useEffect(() => {
+        if (eventInfo && (eventInfo.ticketTypes !== null)) {
+            const updatedTicketTypes = eventInfo.ticketTypes.map(ticketType => ({
+                ...ticketType,
+                isSelected: false,
+                selectedTickets: 0
+            }));
+            setEventTicketTypes(updatedTicketTypes);
+            console.log(eventTicketTypes);
+        }
+    }, [eventInfo]);
 
     // useEffect(() => {
     //     async function fetchEventInfo() {
@@ -188,12 +209,22 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                                 </Link>
                             </div>
                             <div className={styles.bottomArea}>
-                                {eventInfo?.ticketTypes !== null &&
+                                {eventInfo?.ticketTypes == null &&
                                     <div className={styles.priceArea}>
                                         <span>Ticket price:</span>
                                         <h2>&#8358;{eventInfo?.ticketPrice.amount.toLocaleString()}</h2>
                                     </div>}
-                                <button>Purchase your ticket(s)</button>
+                                {eventInfo?.ticketTypes == null ?
+                                    <button>Purchase your ticket(s)</button> :
+                                    <ScrollLink
+                                        to="optionalSection"
+                                        smooth={true}
+                                        duration={200}
+                                        offset={-100}
+                                        onClick={() => setTicketsSelectionContainerIsVisible(true)}>
+                                        <button>See available tickets</button>
+                                    </ScrollLink>
+                                }
                             </div>
                         </div>
                         <div className={styles.actionButtons}>
@@ -215,7 +246,45 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                         </div>
                     </div>
                 </div>
-                <div className={styles.optionalSection}></div>
+                <div className={styles.optionalSection} id='optionalSection'>
+                    {ticketsSelectionContainerIsVisible &&
+                        <div className={styles.ticketsSelectionContainer}>
+                            <div className={styles.topArea}>
+                                <h3>Select the tickets you would like to get, and the number for each.</h3>
+                                <p>By the way, you can select multiple ticket types.</p>
+                            </div>
+                            <div className={styles.ticketsContainer}>
+                                {eventTicketTypes?.map((ticketType, index) => {
+
+                                    return (
+                                        <div className={`${styles.ticket} ${ticketType.isSelected ? styles.active : ''}`} key={index}>
+                                            <div className={styles.ticket__topArea}>
+                                                <p>{ticketType.name}</p>
+                                                <h4>&#8358;{ticketType.price.toLocaleString()}</h4>
+                                            </div>
+                                            <div className={styles.ticket__bottomArea}>
+                                                <span onClick={() => { ticketType.selectedTickets > 1 && (ticketType.selectedTickets -= 1) }}>-</span>
+                                                <p>{ticketType.selectedTickets} ticket</p>
+                                                <span onClick={() => {
+                                                    ticketType.selectedTickets += 1;
+                                                }}>+</span>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            <div className={styles.bottomContainer}>
+                                <div className={styles.left}>
+                                    <p>{selectedTicketsCount} {selectedTicketsCount > 1 ? 'tickets' : 'ticket'} selected</p>
+                                    <div className={styles.price}>
+                                        <p>Total Price:</p>
+                                        <h1>&#8358;133,000</h1>
+                                    </div>
+                                </div>
+                                <button>Purchase {selectedTicketsCount > 1 ? 'tickets' : 'ticket'}</button>
+                            </div>
+                        </div>}
+                </div>
             </section>
             <EventsGroup title='Similar Events' subText='Dear superstar, below is a list of all events available at the moment.' eventsData={events} />
         </div>
