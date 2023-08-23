@@ -34,10 +34,28 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     const [eventInfo, setEventInfo] = useState<Event>();
     const [eventTicketTypes, setEventTicketTypes] = useState<RetrievedTicketType[]>();
     const [loader, setLoader] = useState(false);
-    const [selectedTicketsCount, setSelectedTicketsCount] = useState(0);
+    const [totalSelectedTicketsCount, setTotalSelectedTicketsCount] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
     const [ticketsSelectionContainerIsVisible, setTicketsSelectionContainerIsVisible] = useState(false);
 
     const eventLocation = eventInfo?.location.blockNumber + ' ' + eventInfo?.location.street + ' ' + eventInfo?.location.city + ', ' + eventInfo?.location.state + ', ' + eventInfo?.location.country;
+
+    // useEffect hook to set total selected tickets count
+    useEffect(() => {
+        /**
+         * the reduce function iterates through each ticket in the eventTicketTypes array and adds up the selectedTickets count for each ticket. 
+         * The 0 passed as the second argument to reduce initializes the total variable to 0.
+         */
+        setTotalSelectedTicketsCount(eventTicketTypes?.reduce((total, ticket) => total + ticket.selectedTickets, 0) as number);
+    }, [eventTicketTypes]);
+
+    // useEffect hook to set total price 
+    useEffect(() => {    
+        // Filter through event ticket types availableParallelism, then check for only the selected tickets 
+        const selectedTickets = eventTicketTypes?.filter((ticket) => ticket.isSelected);
+        // iterates through each ticket in the selected tickets array and adds up the multiplication of the ticket price and the selected tickets count for each ticket. 
+        setTotalPrice(selectedTickets?.reduce((total, ticket) => total + ticket.price * ticket.selectedTickets, 0) as number);
+    }, [eventTicketTypes]);
 
     function shareEvent() {
         const eventURL = window.location.href;
@@ -49,7 +67,8 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
         // document.body.removeChild(tempInput);
         try {
             navigator.clipboard.writeText(eventURL);
-            alert("Event link copied to clipboard!");
+            // alert("Event link copied to clipboard!");
+            toasthandler?.logSuccess('Event link copied.', `The link to ${eventInfo?.title} has been copied.`)
         } catch (error) {
             console.error("Copying to clipboard failed:", error);
         }
@@ -84,27 +103,36 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
 
     function incrementTicket(selectedTicketType: RetrievedTicketType) {
         const updatedTicketsCount = eventTicketTypes?.map(ticketType => {
-            if (ticketType === selectedTicketType) { 
+            if (ticketType === selectedTicketType) {
                 return {
                     ...ticketType,
-                    selectedTickets: ticketType.selectedTickets + 1
+                    selectedTickets: ticketType.selectedTickets + 1,
+                    isSelected: true
                 };
             }
             return ticketType;
         })
-        setEventTicketTypes(updatedTicketsCount); 
+        setEventTicketTypes(updatedTicketsCount);
     }
     function decrementTicket(selectedTicketType: RetrievedTicketType) {
         const updatedTicketsCount = eventTicketTypes?.map(ticketType => {
-            if (ticketType === selectedTicketType) { 
+            if (ticketType === selectedTicketType) {
+                if(selectedTicketType.selectedTickets == 1) {
+                    return {
+                        ...ticketType,
+                        selectedTickets: ticketType.selectedTickets - 1,
+                        isSelected: false
+                    };
+                }
                 return {
                     ...ticketType,
-                    selectedTickets: ticketType.selectedTickets - 1
+                    selectedTickets: ticketType.selectedTickets - 1,
+                    isSelected: true
                 };
             }
             return ticketType;
         })
-        setEventTicketTypes(updatedTicketsCount); 
+        setEventTicketTypes(updatedTicketsCount);
     }
 
     useEffect(() => {
@@ -297,13 +325,13 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                             </div>
                             <div className={styles.bottomContainer}>
                                 <div className={styles.left}>
-                                    <p>{selectedTicketsCount} {selectedTicketsCount > 1 ? 'tickets' : 'ticket'} selected</p>
+                                    <p>{totalSelectedTicketsCount} {totalSelectedTicketsCount > 1 ? 'tickets' : 'ticket'} selected</p>
                                     <div className={styles.price}>
                                         <p>Total Price:</p>
-                                        <h1>&#8358;133,000</h1>
+                                        <h1>&#8358;{totalPrice.toLocaleString()}</h1>
                                     </div>
                                 </div>
-                                <button>Purchase {selectedTicketsCount > 1 ? 'tickets' : 'ticket'}</button>
+                                <button>Purchase {totalSelectedTicketsCount > 1 ? 'tickets' : 'ticket'}</button>
                             </div>
                         </div>}
                 </div>
