@@ -11,7 +11,8 @@
         padding-bottom: 4.5rem;
         background-color: $dark-grey;
         display: flex;
-        align-items: flex-start;
+        // align-items: flex-start;
+        align-items: center;
         position: relative;
 
         @include bigMobilePhone {
@@ -344,6 +345,12 @@
                                 font-family: "Mona-Sans-Wide", sans-serif;
                             }
                         }
+                        .resultNotFound {
+                            display: flex;
+                            align-items: center;
+                            gap: .125rem;
+                            padding: .5rem;
+                        }
                     }
                 }
                 .inputArea {
@@ -621,9 +628,9 @@
                     flex-direction: column;
                     align-items: center;
                     gap: 0.25rem;
+                    width: 75%;
                     h2 {
                         font-size: $font-size-24;
-                        width: 80%;
                         text-align: center;
                         @include bigMobilePhone {
                             font-size: $font-size-20;

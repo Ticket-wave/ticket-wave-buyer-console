@@ -8,8 +8,10 @@ import ComponentLoader from '../Loader/ComponentLoader';
 import { useRouter } from 'next/router';
 import { Event } from '../models/IEvent';
 import Link from 'next/link';
-import moment from "moment"; 
+import moment from "moment";
 import useOuterClick from '@/hooks/useOuterClick';
+import { scrollWindow } from '../PageScroll/ScrollWindow';
+import useResponsive from '@/hooks/useResponsiveness copy';
 
 interface HeroSectionProps {
 
@@ -18,6 +20,7 @@ interface HeroSectionProps {
 const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
 
     const router = useRouter();
+    const onMobile = useResponsive();
 
     const imageList = [
         {
@@ -79,7 +82,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
 
     async function handleEventSearch(e: ChangeEvent<HTMLInputElement>) {
 
-        if(searchResults) {
+        if (searchResults) {
             setSearchResultsIsVisible(false);
         }
         if (!eventName) {
@@ -93,7 +96,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
         }
 
         setSearchResultsIsVisible(true);
-        
+
         setSearchResults(events.filter((event) => event.title.toLowerCase().includes(eventName.toLowerCase())));
     }
 
@@ -108,7 +111,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
     }, [imageList.length]);
 
     useEffect(() => {
-        if(!searchResultsIsVisible) {
+        if (!searchResultsIsVisible) {
             setSearchResults(undefined);
             setEventName('');
         }
@@ -126,7 +129,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
             <div className={styles.heroSection__lhs}>
                 <div className={styles.textContents}>
                     <h2>Find The Next Big <br />Event To <span>Attend</span></h2>
-                    <p>"From music festivals to sports games, find the perfect tickets <br />for your entertainment needs!"</p>
+                    <p>"From music festivals to sports games, find the perfect tickets for your entertainment needs!"</p>
                 </div>
                 <div className={styles.actionButtons}>
                     <button className={styles.primaryButton}>Find Event</button>
@@ -145,6 +148,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                                 type="text"
                                 value={eventName}
                                 placeholder='Event name'
+                                onClick={() => onMobile ? scrollWindow(160) : {}}
                                 onChange={(e) => {
                                     setEventName(e.target.value);
                                     handleEventSearch(e);
@@ -154,7 +158,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                         {searchResultsIsVisible &&
                             <div className={styles.resultsDropdown}>
                                 {searchResults?.map((event, index) =>
-                                    <Link href={`/event/${event.id}`}>
+                                    <Link href={`/event/${event.id}`} onClick={() => setSearchResultsIsVisible(false)}>
                                         <div className={styles.eachResult} key={index}>
                                             <div className={styles.eachResult__top}>
                                                 <h4>{event.title}</h4>
@@ -164,20 +168,15 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                                         </div>
                                     </Link>
                                 )}
-                            </div>}
-                        {/* {searchResultsIsVisible && searchResults?.map((event, index) =>
-                            <div className={styles.resultsDropdown}>
-                                <Link href={`/event/${event.id}`}> 
-                                    <div className={styles.eachResult} key={index}>
-                                        <div className={styles.eachResult__top}>
-                                            <h4>{event.title}</h4>
-                                            <h4>12th Jan 2023</h4>
-                                        </div>
-                                        <p>Starting price: &#8358;{event.ticketPrice.amount.toLocaleString()}</p>
+                                {searchResults?.length == 0 &&
+                                    <div className={styles.resultNotFound}>
+                                        <span>
+                                            <Image src={images.sad_face} alt='Sad face emoji' width={36} height={36} />
+                                        </span>
+                                        <p>There are no events based on your search keyword</p>
                                     </div>
-                                </Link>
-                            </div>
-                        )} */}
+                                }
+                            </div>}
                     </div>
                     {/* <button type="submit" style={isLoading ? { opacity: 0.6, pointerEvents: 'none' } : {}} disabled={isLoading}>
                         {
