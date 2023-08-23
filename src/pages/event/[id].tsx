@@ -34,7 +34,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     const [eventInfo, setEventInfo] = useState<Event>();
     const [eventTicketTypes, setEventTicketTypes] = useState<RetrievedTicketType[]>();
     const [loader, setLoader] = useState(false);
-    const [selectedTicketsCount, setSelectedTicketsCount] = useState(4);
+    const [selectedTicketsCount, setSelectedTicketsCount] = useState(eventTicketTypes?.map((ticket) => ticket.selectedTickets));
     const [ticketsSelectionContainerIsVisible, setTicketsSelectionContainerIsVisible] = useState(false);
 
     const eventLocation = eventInfo?.location.blockNumber + ' ' + eventInfo?.location.street + ' ' + eventInfo?.location.city + ', ' + eventInfo?.location.state + ', ' + eventInfo?.location.country;
@@ -80,6 +80,31 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
         const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventDate}T${eventTime}%2F${eventDate}T${eventTime}&location=${encodeURIComponent(location)}`;
 
         window.open(googleCalendarUrl, "_blank");
+    }
+
+    function incrementTicket(selectedTicketType: RetrievedTicketType) {
+        const updatedTicketsCount = eventTicketTypes?.map(ticketType => {
+            if (ticketType === selectedTicketType) { 
+                return {
+                    ...ticketType,
+                    selectedTickets: ticketType.selectedTickets + 1
+                };
+            }
+            return ticketType;
+        })
+        setEventTicketTypes(updatedTicketsCount); 
+    }
+    function decrementTicket(selectedTicketType: RetrievedTicketType) {
+        const updatedTicketsCount = eventTicketTypes?.map(ticketType => {
+            if (ticketType === selectedTicketType) { 
+                return {
+                    ...ticketType,
+                    selectedTickets: ticketType.selectedTickets - 1
+                };
+            }
+            return ticketType;
+        })
+        setEventTicketTypes(updatedTicketsCount); 
     }
 
     useEffect(() => {
@@ -255,19 +280,16 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                             </div>
                             <div className={styles.ticketsContainer}>
                                 {eventTicketTypes?.map((ticketType, index) => {
-
                                     return (
-                                        <div className={`${styles.ticket} ${ticketType.isSelected ? styles.active : ''}`} key={index}>
+                                        <div className={`${styles.ticket} ${ticketType.selectedTickets > 0 ? styles.active : ''}`} key={index}>
                                             <div className={styles.ticket__topArea}>
                                                 <p>{ticketType.name}</p>
                                                 <h4>&#8358;{ticketType.price.toLocaleString()}</h4>
                                             </div>
                                             <div className={styles.ticket__bottomArea}>
-                                                <span onClick={() => { ticketType.selectedTickets > 1 && (ticketType.selectedTickets -= 1) }}>-</span>
+                                                <span onClick={() => { ticketType.selectedTickets > 0 && decrementTicket(ticketType) }}>-</span>
                                                 <p>{ticketType.selectedTickets} ticket</p>
-                                                <span onClick={() => {
-                                                    ticketType.selectedTickets += 1;
-                                                }}>+</span>
+                                                <span onClick={() => incrementTicket(ticketType)}>+</span>
                                             </div>
                                         </div>
                                     )
