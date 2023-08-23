@@ -194,6 +194,9 @@
                     .bottomArea {
                         display: flex;
                         gap: .75rem;
+                        @include bigMobilePhone {
+                            flex-direction: column;
+                        }
                         .priceArea {
                             span {
                                 color: $purple-grey;

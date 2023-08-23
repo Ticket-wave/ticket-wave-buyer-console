@@ -11,6 +11,7 @@ import ToastCard from '@/components/Card/ToastCard';
 import { ToastContext } from '@/extensions/toast';
 import moment from 'moment';
 import EventsGroup from '@/components/events/EventsGroup';
+import useResponsive from '@/hooks/useResponsiveness copy';
 
 interface EventDetailsProps {
 
@@ -18,12 +19,43 @@ interface EventDetailsProps {
 
 const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     const router = useRouter();
+    const onMobile = useResponsive();
     const eventId = router.query.id;
 
     const toasthandler = useContext(ToastContext);
 
     const [eventInfo, setEventInfo] = useState<Event>();
     const [loader, setLoader] = useState(false);
+
+    function shareEvent() {
+        const eventURL = window.location.href;
+        // const tempInput = document.createElement("input");
+        // document.body.appendChild(tempInput);
+        // tempInput.value = eventURL;
+        // tempInput.select();
+        // document.execCommand("copy");
+        // document.body.removeChild(tempInput);
+        try {
+            navigator.clipboard.writeText(eventURL);
+            alert("Event link copied to clipboard!");
+        } catch (error) {
+            console.error("Copying to clipboard failed:", error);
+        }
+    }
+    function shareEventMobile() {
+        const eventURL = window.location.href;
+        if (navigator.share) {
+            navigator.share({
+              title: "Check out this event!",
+              text: "I found this amazing event. You should check it out!",
+              url: eventURL
+            })
+            .then(() => console.log("Shared successfully"))
+            .catch(error => console.log("Sharing failed:", error));
+          } else {
+            console.log("Web Share API not supported");
+          }
+    }
 
     useEffect(() => {
         if (router.isReady) {
@@ -158,7 +190,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                                 </div>
                             </Tooltip>
                             <Tooltip tooltipText='Share event'>
-                                <div className={styles.actionButton} style={{ backgroundColor: '#D5542A' }}>
+                                <div className={styles.actionButton} style={{ backgroundColor: '#D5542A' }} onClick={() => onMobile ? shareEventMobile() : shareEvent()}>
                                     <ShareIcon />
                                 </div>
                             </Tooltip>
