@@ -50,7 +50,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     }, [eventTicketTypes]);
 
     // useEffect hook to set total price 
-    useEffect(() => {    
+    useEffect(() => {
         // Filter through event ticket types availableParallelism, then check for only the selected tickets 
         const selectedTickets = eventTicketTypes?.filter((ticket) => ticket.isSelected);
         // iterates through each ticket in the selected tickets array and adds up the multiplication of the ticket price and the selected tickets count for each ticket. 
@@ -117,7 +117,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     function decrementTicket(selectedTicketType: RetrievedTicketType) {
         const updatedTicketsCount = eventTicketTypes?.map(ticketType => {
             if (ticketType === selectedTicketType) {
-                if(selectedTicketType.selectedTickets == 1) {
+                if (selectedTicketType.selectedTickets == 1) {
                     return {
                         ...ticketType,
                         selectedTickets: ticketType.selectedTickets - 1,
@@ -300,7 +300,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                     </div>
                 </div>
                 <div className={styles.optionalSection} id='optionalSection'>
-                    {ticketsSelectionContainerIsVisible &&
+                    {ticketsSelectionContainerIsVisible && eventTicketTypes && eventTicketTypes.length > 0 &&
                         <div className={styles.ticketsSelectionContainer}>
                             <div className={styles.topArea}>
                                 <h3>Select the tickets you would like to get, and the number for each.</h3>
@@ -333,6 +333,11 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                                 </div>
                                 <button>Purchase {totalSelectedTicketsCount > 1 ? 'tickets' : 'ticket'}</button>
                             </div>
+                        </div>
+                    }
+                    {ticketsSelectionContainerIsVisible && (!eventTicketTypes || eventTicketTypes?.length == 0) &&
+                        <div className={styles.ticketsSelectionContainer}>
+                            <div className={styles.topArea}>top area</div>
                         </div>}
                 </div>
             </section>
