@@ -19,11 +19,11 @@ const EventCard: FunctionComponent<EventCardProps> = ({ event, mobileAndActionBu
     const onMobile = useResponsive();
     const toasthandler = useContext(ToastContext);
 
-    function shareEvent(eventInfo: Event) {
+    function shareEvent() {
         const eventURL = window.location.href;
         try {
             navigator.clipboard.writeText(eventURL);
-            toasthandler?.logSuccess('Event link copied.', `The link to ${eventInfo?.title} has been copied.`)
+            toasthandler?.logSuccess('Event link copied.', `The link to ${event.title} has been copied.`)
         } catch (error) {
             console.error("Copying to clipboard failed:", error);
         }
@@ -75,7 +75,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ event, mobileAndActionBu
                     <div className={styles.eventInfo__rhs}>
                         <div className={styles.actions}>
                             <button className={styles.actions__like}><LikeIcon /></button>
-                            <button className={styles.actions__share}><ShareIcon /></button>
+                            <button className={styles.actions__share} onClick={() => onMobile ? shareEventMobile() : shareEvent()}><ShareIcon /></button>
                         </div>
                         <p className={styles.restriction}>Everyone</p>
                     </div>}

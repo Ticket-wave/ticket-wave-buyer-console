@@ -283,17 +283,17 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                             </div>
                         </div>
                         <div className={styles.actionButtons}>
-                            <Tooltip tooltipText='Add to calender' position={onMobile ? 'top' : 'left'}>
+                            <Tooltip tooltipText='Add to calender'>
                                 <div className={styles.actionButton} onClick={() => addEventToGoogleCalender()}>
                                     <CalenderIcon />
                                 </div>
                             </Tooltip>
-                            <Tooltip tooltipText='Like event' position={onMobile ? 'top' : 'left'}>
+                            <Tooltip tooltipText='Like event'>
                                 <div className={styles.actionButton}>
                                     <HeartIcon />
                                 </div>
                             </Tooltip>
-                            <Tooltip tooltipText='Share event' position={onMobile ? 'top' : 'left'}>
+                            <Tooltip tooltipText='Share event'>
                                 <div className={styles.actionButton} style={{ backgroundColor: '#D5542A' }} onClick={() => onMobile ? shareEventMobile() : shareEvent()}>
                                     <ShareIcon />
                                 </div>
