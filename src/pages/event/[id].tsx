@@ -262,13 +262,15 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                                 </Link>
                             </div>
                             <div className={styles.bottomArea}>
-                                {eventInfo?.ticketTypes == null &&
-                                    <div className={styles.priceArea}>
-                                        <span>Ticket price:</span>
-                                        <h2>&#8358;{eventInfo?.ticketPrice.amount.toLocaleString()}</h2>
-                                    </div>}
-                                {eventInfo?.ticketTypes == null ?
-                                    <button>Purchase your ticket(s)</button> :
+                                {eventInfo && eventInfo?.ticketTypes == null ?
+                                    <>
+                                        <div className={styles.priceArea}>
+                                            <span>Ticket price:</span>
+                                            <h2>&#8358;{eventInfo?.ticketPrice.amount.toLocaleString()}</h2>
+                                        </div>
+                                        <button>Purchase your ticket(s)</button>
+                                    </>
+                                    :
                                     <ScrollLink
                                         to="optionalSection"
                                         smooth={true}
@@ -281,17 +283,17 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                             </div>
                         </div>
                         <div className={styles.actionButtons}>
-                            <Tooltip tooltipText='Add to calender'>
+                            <Tooltip tooltipText='Add to calender' position={onMobile ? 'top' : 'left'}>
                                 <div className={styles.actionButton} onClick={() => addEventToGoogleCalender()}>
                                     <CalenderIcon />
                                 </div>
                             </Tooltip>
-                            <Tooltip tooltipText='Like event'>
+                            <Tooltip tooltipText='Like event' position={onMobile ? 'top' : 'left'}>
                                 <div className={styles.actionButton}>
                                     <HeartIcon />
                                 </div>
                             </Tooltip>
-                            <Tooltip tooltipText='Share event'>
+                            <Tooltip tooltipText='Share event' position={onMobile ? 'top' : 'left'}>
                                 <div className={styles.actionButton} style={{ backgroundColor: '#D5542A' }} onClick={() => onMobile ? shareEventMobile() : shareEvent()}>
                                     <ShareIcon />
                                 </div>
@@ -336,8 +338,18 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                         </div>
                     }
                     {ticketsSelectionContainerIsVisible && (!eventTicketTypes || eventTicketTypes?.length == 0) &&
-                        <div className={styles.ticketsSelectionContainer}>
-                            <div className={styles.topArea}>top area</div>
+                        <div className={styles.ticketsFetchErrorMsgContainer}>
+                            <div className={styles.topArea}>
+                                <h3>Oops!</h3>
+                                {/* <p>By the way, you can select multiple ticket types.</p> */}
+                            </div>
+                            <div className={styles.messageContent}>
+                                <div className={styles.messageContent__image}>
+                                    <Image src={images.sad_face} alt='Sad face' />
+                                </div>
+                                <h4>We encountered an issue, while trying to get the available tickets.</h4>
+                                <p>Please <span onClick={() => router.reload()}>reload</span> the page, and keep your fingers crossed while try our best again.</p>
+                            </div>
                         </div>}
                 </div>
             </section>
