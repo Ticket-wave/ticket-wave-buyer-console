@@ -116,7 +116,7 @@ img {
 .tooltipWrapper {
     position: relative;
     cursor: pointer;
-    .tooltip {
+    .tooltip, .top, .right {
         pointer-events: none;
         font-size: $font-size-16 - .25rem;
         white-space: nowrap;
@@ -124,10 +124,12 @@ img {
         top: 50%;
         right: 100%;
         opacity: 0;
+        width: fit-content;
         transform: translate(0%, -50%);
         background-color: $dark-grey;
         padding: .35rem 0.6rem .3rem;
         border-radius: .4rem;
+        z-index: 2;
         &::after {
             content: '';
             background-color: $dark-grey;
@@ -139,6 +141,42 @@ img {
             height: .5rem;
             rotate: 45deg;
             z-index: -1;
+        }
+    }
+    .top {
+        top: -100%;
+        left: 50%;
+        transform: translateX(-50%);
+        &::after {
+            right: auto;
+            top: auto;
+            left: 50%;
+            bottom: -25%;
+            transform: translate(-50%, 0%);
+        }
+    }
+    .right {
+        left: 115%;
+        transform: translate(0%, -50%);
+        &::after {
+            right: auto;
+            top: 45%;
+            left: -6%;
+            transform: translate(0%, -50%);
+        }
+    }
+    .bottom {
+        top: auto;
+        bottom: -100%;
+        transform: translate(0%, 0%);
+        left: 50%;
+        transform: translateX(-50%);
+        &::after {
+            right: auto;
+            top: -2%;
+            left: 50%;
+            bottom: auto;
+            transform: translate(-50%, 0%);
         }
     }
     &:hover {
