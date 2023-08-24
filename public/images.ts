@@ -16,6 +16,7 @@ import createImageMobile from "./images/createImageMobile.png";
 import woman_dancing from "./images/woman_dancing.svg";
 import user_avatar from "./images/user_avatar.png";
 import sad_face from "./images/sad_face.png";
+import fingers_crossed from "./images/fingers_crossed.png";
 
 export default {
   logoWhite,
@@ -35,5 +36,6 @@ export default {
   createImageMobile,
   woman_dancing,
   user_avatar,
-  sad_face
+  sad_face,
+  fingers_crossed
 };
