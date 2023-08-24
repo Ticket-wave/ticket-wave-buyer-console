@@ -7,6 +7,7 @@ import useResponsive from "@/hooks/useResponsiveness copy";
 import { Event } from "../models/IEvent";
 import moment from "moment";
 import Link from "next/link";
+import EventCard from "../Event/EventCard";
 
 interface EventsGroupProps {
     title: string
@@ -35,42 +36,8 @@ const EventsGroup: FunctionComponent<EventsGroupProps> = ({ title, subText, even
             <div className={styles.eventsContainer}>
                 <div className={styles.eventsContainerCarousel}>
                     {eventsData.map((event, index) =>
-                        <div className={styles.event} key={index}>
-                            <div className={styles.backgroundImage}>
-                                <Image src={images.ticketbg} alt='Ticket background' />
-                            </div>
-                            <span className={styles.event__tag}>Latest</span>
-                            <div className={styles.event__image}>
-                                <Image src={images.event_flyer} alt='Event flyer' />
-                            </div>
-                            <span className={styles.hLine}>
-                                <HorizontalLineIcon />
-                            </span>
-                            <div className={styles.eventInfo}>
-                                <div className={styles.eventInfo__lhs}>
-                                    <h3 className={styles.title}>{event.title}</h3>
-                                    <div className={styles.dateTime}>
-                                        <span className={styles.dateTime__date}>{moment(event.dateCreated).format('MMM DD')}</span>
-                                        <span className={styles.dateTime__dot}></span>
-                                        <span className={styles.dateTime__time}>{moment(event.dateCreated).format('hh:mmA')}</span>
-                                    </div>
-                                    <div className={styles.location}>
-                                        <LocationPinIcon />
-                                        <p>{event.location.blockNumber + ' ' + event.location.city + ', ' + event.location.state + ', ' + event.location.country}</p>
-                                    </div>
-                                </div>
-                                {!onMobile && <div className={styles.eventInfo__rhs}>
-                                    <div className={styles.actions}>
-                                        <button className={styles.actions__like}><LikeIcon /></button>
-                                        <button className={styles.actions__share}><ShareIcon /></button>
-                                    </div>
-                                    <p className={styles.restriction}>Everyone</p>
-                                </div>}
-                            </div>
-                            <Link href={`/event/${event.id}`}> 
-                                <button>View details</button>
-                            </Link>
-                        </div>)}
+                        <EventCard event={event} mobileAndActionButtonDismiss key={index} />
+                    )}
                 </div>
             </div>
         </section>
