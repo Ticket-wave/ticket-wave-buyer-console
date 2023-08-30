@@ -217,7 +217,7 @@
 .scrollArea {
     &::-webkit-scrollbar-thumb {
         background-color: lighten($color: $primary-color, $amount: 40%);
-        border-radius: 0rem;
+        border-radius: 1rem;
         border: .188rem solid transparent;
         cursor: pointer;
         &:hover {
