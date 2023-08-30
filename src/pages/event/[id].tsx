@@ -223,6 +223,15 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     //     }
     // }, [router.isReady, router.query.eventRequestId, router.query.sessionId]);
 
+    /**
+     * useEffect to make body scrollable or not
+     */
+    // useEffect(() => {
+    //     ticketDeliveryModalIsVisible
+    //         ? document.body.classList.add('bodyNoScroll')
+    //         : document.body.classList.remove('bodyNoScroll');
+    // }, [ticketDeliveryModalIsVisible]);  
+
     return (
         <>
             <TicketDelivery

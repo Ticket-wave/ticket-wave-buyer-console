@@ -425,7 +425,7 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
             }
             {
                 onMobile &&
-                <PanelWrapper visibility={visibility} setVisibility={setVisibility} styles={{ height: '100%', top: '0' }}>
+                <PanelWrapper visibility={visibility} setVisibility={setVisibility} styles={{ height: '100%', top: '0', borderRadius: '0', paddingTop: '48px', paddingBottom: '72px' }}>
                     <div className={styles.ticketDeliveryContainer}>
                         {/* <button><CloseIcon /> Close</button> */}
                         <div className={styles.lhs}>

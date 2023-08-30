@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useContext } from 'react';
+import { FunctionComponent, ReactElement, useContext, useEffect } from 'react';
 import styles from '../../styles/FeaturedEvents.module.scss';
 import Image from 'next/image';
 import images from '../../../public/images';

@@ -186,3 +186,14 @@ img {
         }
     }
 }
+
+
+.bodyNoScroll {
+    // position: fixed;
+    // width: 100%;
+    overflow: hidden;
+}
+.bodyScroll {
+    position: relative;
+    width: auto;
+}
