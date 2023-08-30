@@ -14,6 +14,7 @@ import EventsGroup from '@/components/events/EventsGroup';
 import useResponsive from '@/hooks/useResponsiveness copy';
 import Link from 'next/link';
 import { Link as ScrollLink } from 'react-scroll';
+import TicketDelivery from '@/components/Modal/TicketDelivery';
 
 interface EventDetailsProps {
 
@@ -37,6 +38,8 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     const [totalSelectedTicketsCount, setTotalSelectedTicketsCount] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
     const [ticketsSelectionContainerIsVisible, setTicketsSelectionContainerIsVisible] = useState(false);
+
+    const [ticketDeliveryModalIsVisible, setTicketDeliveryModalIsVisible] = useState(false);
 
     const eventLocation = eventInfo?.location.blockNumber + ' ' + eventInfo?.location.street + ' ' + eventInfo?.location.city + ', ' + eventInfo?.location.state + ', ' + eventInfo?.location.country;
 
@@ -221,140 +224,149 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     // }, [router.isReady, router.query.eventRequestId, router.query.sessionId]);
 
     return (
-        <div className={styles.eventDetailsPage}>
-            <section className={styles.heroSection}>
-                <div className={styles.video}>
-                    <video
-                        autoPlay
-                        loop
-                        muted
-                        src="https://res.cloudinary.com/dxwpajciu/video/upload/v1691936875/ticketwave/videos/people_waving_p9tni6.mp4" />
-                </div>
-                <div className={styles.textContents}>
-                    <span>Time to party! <span className={styles.img}><Image src={images.woman_dancing} alt='Woman dancing' /></span></span>
-                    <h2>Event Information</h2>
-                </div>
-            </section>
-            <section className={styles.eventInfoContainer}>
-                <div className={styles.mainSection}>
-                    <div className={styles.eventImage}>
-                        <Image src={images.event_flyer} alt='Event flyer' />
+        <>
+            <TicketDelivery
+                visibility={ticketDeliveryModalIsVisible}
+                setVisibility={setTicketDeliveryModalIsVisible} />
+            <div className={styles.eventDetailsPage}>
+                <section className={styles.heroSection}>
+                    <div className={styles.video}>
+                        <video
+                            autoPlay
+                            loop
+                            muted
+                            src="https://res.cloudinary.com/dxwpajciu/video/upload/v1691936875/ticketwave/videos/people_waving_p9tni6.mp4" />
                     </div>
-                    <span className={styles.tag}>Latest</span>
-                    <div className={styles.eventDetails}>
-                        <div className={styles.leftInfo}>
-                            <h2 className={styles.title}>{eventInfo?.title}</h2>
-                            <p className={styles.datePosted}>Posted on: {moment(eventInfo?.dateCreated).format('Do MMMM YYYY')}</p>
-                            <div className={styles.publisherInfo}>
-                                <div className={styles.publisherInfo__image}>
-                                    <Image src={images.user_avatar} alt='Avatar' />
-                                </div>
-                                <div className={styles.publisherInfo__name}>{eventInfo?.publisher.name}</div>
-                            </div>
-                            <div className={styles.dateTime}>
-                                <h4>{moment(eventInfo?.eventDateTime).format("MMM. Do YYYY")}</h4>
-                                <h4>{moment(eventInfo?.eventDateTime).format("hh:mma")}</h4>
-                            </div>
-                            <div className={styles.location}>
-                                <p>{eventInfo?.location.blockNumber + ' ' + eventInfo?.location.street + ' ' + eventInfo?.location.city + ', ' + eventInfo?.location.state + ', ' + eventInfo?.location.country}</p>
-                                <Link href={`https://www.google.com/maps/search/?api=1&query=${eventInfo?.location.blockNumber},+${eventInfo?.location.street},+${eventInfo?.location.city}+${eventInfo?.location.state}+${eventInfo?.location.country}`} target='_blank'>
-                                    <button>Get directions on map</button>
-                                </Link>
-                            </div>
-                            <div className={styles.bottomArea}>
-                                {eventInfo && eventInfo?.ticketTypes == null ?
-                                    <>
-                                        <div className={styles.priceArea}>
-                                            <span>Ticket price:</span>
-                                            <h2>&#8358;{eventInfo?.ticketPrice.amount.toLocaleString()}</h2>
-                                        </div>
-                                        <button>Purchase your ticket(s)</button>
-                                    </>
-                                    :
-                                    <ScrollLink
-                                        to="optionalSection"
-                                        smooth={true}
-                                        duration={200}
-                                        offset={-100}
-                                        onClick={() => setTicketsSelectionContainerIsVisible(true)}>
-                                        <button>See available tickets</button>
-                                    </ScrollLink>
-                                }
-                            </div>
-                        </div>
-                        <div className={styles.actionButtons}>
-                            <Tooltip tooltipText='Add to calender'>
-                                <div className={styles.actionButton} onClick={() => addEventToGoogleCalender()}>
-                                    <CalenderIcon />
-                                </div>
-                            </Tooltip>
-                            <Tooltip tooltipText='Like event'>
-                                <div className={styles.actionButton}>
-                                    <HeartIcon />
-                                </div>
-                            </Tooltip>
-                            <Tooltip tooltipText='Share event'>
-                                <div className={styles.actionButton} style={{ backgroundColor: '#D5542A' }} onClick={() => onMobile ? shareEventMobile() : shareEvent()}>
-                                    <ShareIcon />
-                                </div>
-                            </Tooltip>
-                        </div>
+                    <div className={styles.textContents}>
+                        <span>Time to party! <span className={styles.img}><Image src={images.woman_dancing} alt='Woman dancing' /></span></span>
+                        <h2>Event Information</h2>
                     </div>
-                </div>
-                <div className={styles.optionalSection} id='optionalSection'>
-                    {ticketsSelectionContainerIsVisible && eventTicketTypes && eventTicketTypes.length > 0 &&
-                        <div className={styles.ticketsSelectionContainer}>
-                            <div className={styles.topArea}>
-                                <h3>Select the tickets you would like to get, and the number for each.</h3>
-                                <p>By the way, you can select multiple ticket types.</p>
+                </section>
+                {eventInfo ?
+                    <section className={styles.eventInfoContainer}>
+                        <div className={styles.mainSection}>
+                            <div className={styles.eventImage}>
+                                <Image src={images.event_flyer} alt='Event flyer' />
                             </div>
-                            <div className={styles.ticketsContainer}>
-                                {eventTicketTypes?.map((ticketType, index) => {
-                                    return (
-                                        <div className={`${styles.ticket} ${ticketType.selectedTickets > 0 ? styles.active : ''}`} key={index}>
-                                            <div className={styles.ticket__topArea}>
-                                                <p>{ticketType.name}</p>
-                                                <h4>&#8358;{ticketType.price.toLocaleString()}</h4>
-                                            </div>
-                                            <div className={styles.ticket__bottomArea}>
-                                                <span onClick={() => { ticketType.selectedTickets > 0 && decrementTicket(ticketType) }}>-</span>
-                                                <p>{ticketType.selectedTickets} ticket</p>
-                                                <span onClick={() => incrementTicket(ticketType)}>+</span>
-                                            </div>
+                            <span className={styles.tag}>Latest</span>
+                            <div className={styles.eventDetails}>
+                                <div className={styles.leftInfo}>
+                                    <h2 className={styles.title}>{eventInfo?.title}</h2>
+                                    <p className={styles.datePosted}>Posted on: {moment(eventInfo?.dateCreated).format('Do MMMM YYYY')}</p>
+                                    <div className={styles.publisherInfo}>
+                                        <div className={styles.publisherInfo__image}>
+                                            <Image src={images.user_avatar} alt='Avatar' />
                                         </div>
-                                    )
-                                })}
-                            </div>
-                            <div className={styles.bottomContainer}>
-                                <div className={styles.left}>
-                                    <p>{totalSelectedTicketsCount} {totalSelectedTicketsCount > 1 ? 'tickets' : 'ticket'} selected</p>
-                                    <div className={styles.price}>
-                                        <p>Total Price:</p>
-                                        <h1>&#8358;{totalPrice.toLocaleString()}</h1>
+                                        <div className={styles.publisherInfo__name}>{eventInfo?.publisher.name}</div>
+                                    </div>
+                                    <div className={styles.dateTime}>
+                                        <h4>{moment(eventInfo?.eventDateTime).format("MMM. Do YYYY")}</h4>
+                                        <h4>{moment(eventInfo?.eventDateTime).format("hh:mma")}</h4>
+                                    </div>
+                                    <div className={styles.location}>
+                                        <p>{eventInfo?.location.blockNumber + ' ' + eventInfo?.location.street + ' ' + eventInfo?.location.city + ', ' + eventInfo?.location.state + ', ' + eventInfo?.location.country}</p>
+                                        <Link href={`https://www.google.com/maps/search/?api=1&query=${eventInfo?.location.blockNumber},+${eventInfo?.location.street},+${eventInfo?.location.city}+${eventInfo?.location.state}+${eventInfo?.location.country}`} target='_blank'>
+                                            <button>Get directions on map</button>
+                                        </Link>
+                                    </div>
+                                    <div className={styles.bottomArea}>
+                                        {eventInfo && eventInfo?.ticketTypes == null ?
+                                            <>
+                                                <div className={styles.priceArea}>
+                                                    <span>Ticket price:</span>
+                                                    <h2>&#8358;{eventInfo?.ticketPrice.amount.toLocaleString()}</h2>
+                                                </div>
+                                                <button>Purchase your ticket(s)</button>
+                                            </>
+                                            :
+                                            <ScrollLink
+                                                to="optionalSection"
+                                                smooth={true}
+                                                duration={200}
+                                                offset={-100}
+                                                onClick={() => setTicketsSelectionContainerIsVisible(true)}>
+                                                <button>See available tickets</button>
+                                            </ScrollLink>
+                                        }
                                     </div>
                                 </div>
-                                <button>Purchase {totalSelectedTicketsCount > 1 ? 'tickets' : 'ticket'}</button>
+                                <div className={styles.actionButtons}>
+                                    <Tooltip tooltipText='Add to calender'>
+                                        <div className={styles.actionButton} onClick={() => addEventToGoogleCalender()}>
+                                            <CalenderIcon />
+                                        </div>
+                                    </Tooltip>
+                                    <Tooltip tooltipText='Like event'>
+                                        <div className={styles.actionButton}>
+                                            <HeartIcon />
+                                        </div>
+                                    </Tooltip>
+                                    <Tooltip tooltipText='Share event'>
+                                        <div className={styles.actionButton} style={{ backgroundColor: '#D5542A' }} onClick={() => onMobile ? shareEventMobile() : shareEvent()}>
+                                            <ShareIcon />
+                                        </div>
+                                    </Tooltip>
+                                </div>
                             </div>
                         </div>
-                    }
-                    {ticketsSelectionContainerIsVisible && (!eventTicketTypes || eventTicketTypes?.length == 0) &&
-                        <div className={styles.ticketsFetchErrorMsgContainer}>
-                            <div className={styles.topArea}>
-                                <h3>Oops!</h3>
-                                {/* <p>By the way, you can select multiple ticket types.</p> */}
-                            </div>
-                            <div className={styles.messageContent}>
-                                <div className={styles.messageContent__image}>
-                                    <Image src={images.sad_face} alt='Sad face' />
+                        <div className={styles.optionalSection} id='optionalSection'>
+                            {ticketsSelectionContainerIsVisible && eventTicketTypes && eventTicketTypes.length > 0 &&
+                                <div className={styles.ticketsSelectionContainer}>
+                                    <div className={styles.topArea}>
+                                        <h3>Select the tickets you would like to get, and the number for each.</h3>
+                                        <p>By the way, you can select multiple ticket types.</p>
+                                    </div>
+                                    <div className={styles.ticketsContainer}>
+                                        {eventTicketTypes?.map((ticketType, index) => {
+                                            return (
+                                                <div className={`${styles.ticket} ${ticketType.selectedTickets > 0 ? styles.active : ''}`} key={index}>
+                                                    <div className={styles.ticket__topArea}>
+                                                        <p>{ticketType.name}</p>
+                                                        <h4>&#8358;{ticketType.price.toLocaleString()}</h4>
+                                                    </div>
+                                                    <div className={styles.ticket__bottomArea}>
+                                                        <span onClick={() => { ticketType.selectedTickets > 0 && decrementTicket(ticketType) }}>-</span>
+                                                        <p>{ticketType.selectedTickets} ticket</p>
+                                                        <span onClick={() => incrementTicket(ticketType)}>+</span>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                    <div className={styles.bottomContainer}>
+                                        <div className={styles.left}>
+                                            <p>{totalSelectedTicketsCount} {totalSelectedTicketsCount > 1 ? 'tickets' : 'ticket'} selected</p>
+                                            <div className={styles.price}>
+                                                <p>Total Price:</p>
+                                                <h1>&#8358;{totalPrice.toLocaleString()}</h1>
+                                            </div>
+                                        </div>
+                                        <button onClick={() => setTicketDeliveryModalIsVisible(true)}>Purchase {totalSelectedTicketsCount > 1 ? 'tickets' : 'ticket'}</button>
+                                    </div>
                                 </div>
-                                <h4>We encountered an issue, while trying to get the available tickets.</h4>
-                                <p>Please <span onClick={() => router.reload()}>reload</span> the page, and keep your fingers crossed while try our best again.</p>
-                            </div>
-                        </div>}
-                </div>
-            </section>
-            <EventsGroup title='Similar Events' subText='Dear superstar, below is a list of all events available at the moment.' eventsData={events} />
-        </div>
+                            }
+                            {ticketsSelectionContainerIsVisible && (!eventTicketTypes || eventTicketTypes?.length == 0) &&
+                                <div className={styles.ticketsFetchErrorMsgContainer}>
+                                    <div className={styles.topArea}>
+                                        <h3>Oops!</h3>
+                                        {/* <p>By the way, you can select multiple ticket types.</p> */}
+                                    </div>
+                                    <div className={styles.messageContent}>
+                                        <div className={styles.messageContent__image}>
+                                            <Image src={images.sad_face} alt='Sad face' />
+                                        </div>
+                                        <h4>We encountered an issue, while trying to get the available tickets.</h4>
+                                        <p>Please <span onClick={() => router.reload()}>reload</span> the page, and keep your fingers crossed while try our best again.</p>
+                                    </div>
+                                </div>}
+                        </div>
+                    </section> :
+                    <section className={styles.eventInfoContainer}>
+                        Loading...
+                    </section>}
+                <EventsGroup title='Similar Events' subText='Dear superstar, below is a list of all events available at the moment.' eventsData={events} />
+            </div>
+        </>
     );
 }
 
