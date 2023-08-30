@@ -353,6 +353,22 @@ export function CloseMenuIcon({ width, height }: any) {
     )
 };
 
+export function CheckIcon({ width, height }: any) {
+    return (
+        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.99977 11.2805L3.68644 8.96721C3.56179 8.84255 3.39272 8.77253 3.21644 8.77253C3.04015 8.77253 2.87109 8.84255 2.74644 8.96721C2.62179 9.09186 2.55176 9.26092 2.55176 9.43721C2.55176 9.52449 2.56895 9.61093 2.60235 9.69157C2.63576 9.77221 2.68472 9.84548 2.74644 9.90721L5.53311 12.6939C5.79311 12.9539 6.21311 12.9539 6.47311 12.6939L13.5264 5.64054C13.6511 5.51589 13.7211 5.34682 13.7211 5.17054C13.7211 4.99426 13.6511 4.82519 13.5264 4.70054C13.4018 4.57589 13.2327 4.50586 13.0564 4.50586C12.8802 4.50586 12.7111 4.57589 12.5864 4.70054L5.99977 11.2805Z" fill="#B78AF7" />
+        </svg>
+    )
+};
+
+export function CloseIcon({ width, height }: any) {
+    return (
+        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.6665 5.16602L11.3332 11.8327M4.6665 11.8327L11.3332 5.16602" stroke="#D5133A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    )
+};
+
 export function CalenderIcon({ width, height }: any) {
     return (
         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
