@@ -6,7 +6,7 @@ import images from '../../../public/images';
 import { CalenderIcon, HeartIcon, ShareIcon } from '@/components/SVGs/SVGicons';
 import Tooltip from '@/components/custom/Tooltip';
 import { events } from '@/components/demoData/Events';
-import { Event, TicketType } from '@/components/models/IEvent';
+import { Event, RetrievedTicketType, TicketType } from '@/components/models/IEvent';
 import ToastCard from '@/components/Card/ToastCard';
 import { ToastContext } from '@/extensions/toast';
 import moment from 'moment';
@@ -20,10 +20,6 @@ interface EventDetailsProps {
 
 }
 
-interface RetrievedTicketType extends TicketType {
-    isSelected: boolean,
-    selectedTickets: number
-}
 
 const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     const router = useRouter();
@@ -34,6 +30,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
 
     const [eventInfo, setEventInfo] = useState<Event>();
     const [eventTicketTypes, setEventTicketTypes] = useState<RetrievedTicketType[]>();
+    // const [selectedEventTicketTypes, setSelectedEventTicketTypes] = useState<RetrievedTicketType[]>();
     const [loader, setLoader] = useState(false);
     const [totalSelectedTicketsCount, setTotalSelectedTicketsCount] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -236,7 +233,8 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
         <>
             <TicketDelivery
                 visibility={ticketDeliveryModalIsVisible}
-                setVisibility={setTicketDeliveryModalIsVisible} />
+                setVisibility={setTicketDeliveryModalIsVisible}
+                eventTicketTypes={eventTicketTypes} />
             <div className={styles.eventDetailsPage}>
                 <section className={styles.heroSection}>
                     <div className={styles.video}>
@@ -294,7 +292,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                                                 duration={200}
                                                 offset={-100}
                                                 onClick={() => setTicketsSelectionContainerIsVisible(true)}>
-                                                <button>See available tickets</button>
+                                                <button>Get available tickets</button>
                                             </ScrollLink>
                                         }
                                     </div>

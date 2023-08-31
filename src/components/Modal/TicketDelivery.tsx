@@ -9,10 +9,12 @@ import { ITicketPricing } from "../models/ITicketPricing";
 import { emailRegex } from "@/constants/emailRegex";
 import useResponsive from "@/hooks/useResponsiveness copy";
 import PanelWrapper from "./PanelWrapper";
+import { RetrievedTicketType } from "../models/IEvent";
 
 interface TicketDeliveryProps {
     setVisibility: Dispatch<SetStateAction<boolean>>
     visibility: boolean
+    eventTicketTypes: RetrievedTicketType[] | undefined
 }
 
 enum ValidationStatus {
@@ -21,18 +23,11 @@ enum ValidationStatus {
     NotInitiated = 2,
 }
 
-interface ErrorModel {
-    ticketId: string;
-    hasError: boolean;
-    message?: string;
-    tab?: string;
-}
-
 interface RetrievedITicketPricing extends ITicketPricing {
     hasEmail: boolean
 }
 
-const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, setVisibility }): ReactElement => {
+const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, setVisibility, eventTicketTypes }): ReactElement => {
 
     const toastHandler = useContext(ToastContext);
 
@@ -40,6 +35,10 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
 
     const [isInputActive, setIsInputActive] = useState(false);
     const [isLoading, setisLoading] = useState(false);
+
+    useEffect(() => {
+        console.log(eventTicketTypes);
+    }, [eventTicketTypes]);
 
     const dummyTicketPricings: ITicketPricing[] = [
         {
@@ -425,7 +424,19 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
             }
             {
                 onMobile &&
-                <PanelWrapper visibility={visibility} setVisibility={setVisibility} styles={{ height: '100%', top: '0', borderRadius: '0', paddingTop: '48px', paddingBottom: '72px' }}>
+                <PanelWrapper
+                    visibility={visibility}
+                    setVisibility={setVisibility}
+                    styles={
+                        {
+                            height: '100%',
+                            top: '0',
+                            borderRadius: '0',
+                            paddingTop: '48px',
+                            paddingBottom: '72px',
+                            position: 'fixed',
+                            width: '100%'
+                        }}>
                     <div className={styles.ticketDeliveryContainer}>
                         {/* <button><CloseIcon /> Close</button> */}
                         <div className={styles.lhs}>
@@ -455,7 +466,7 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
                                                     <span onClick={unsetPrimaryEmail}>Remove</span>
                                                 </div> :
                                                 <button onClick={() => updatePrimaryEmail(formValues[`${ticketPricing.ticketType}${ticketPricing.ticketId}`])}>
-                                                    Set as primary email
+                                                    Click to set as primary email
                                                 </button>
                                             }
                                         </div>

@@ -22,7 +22,7 @@
     @include bigMobilePhone {
         flex-direction: column;
         height: fit-content;
-        min-height: fit-content; 
+        min-height: fit-content;
         padding: 0;
         border-radius: 0;
         color: $white;
@@ -108,9 +108,12 @@
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
+                        > button {
+                            color: $success-color;
+                        }
 
                         span {
-                            font-size: $font-size-16 - 0.35rem;
+                            font-size: $font-size-16 - 0.15rem;
                             font-weight: $fontWeight-400;
                             cursor: pointer;
                             background-color: rgba($color: $failed-color, $alpha: 0.2);
@@ -122,7 +125,7 @@
                         }
                     }
                     button {
-                        font-size: $font-size-16 - 0.35rem;
+                        font-size: $font-size-16 - 0.25rem;
                         font-weight: $fontWeight-400;
                         cursor: pointer;
                         background-color: transparent;

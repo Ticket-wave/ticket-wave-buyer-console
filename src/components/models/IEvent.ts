@@ -37,6 +37,8 @@ export interface Event {
   image: string;
 }
 
-// export interface Events {
-//   events: Event[];
-// }
+
+export interface RetrievedTicketType extends TicketType {
+    isSelected: boolean,
+    selectedTickets: number
+}
