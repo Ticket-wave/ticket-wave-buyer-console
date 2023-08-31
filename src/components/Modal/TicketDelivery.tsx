@@ -134,6 +134,8 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
     const [codeValidationStatus, setCodeValidationStatus] = useState<ValidationStatus>(ValidationStatus.NotInitiated);
     const [couponCodeValue, setCouponCodeValue] = useState<string>();
 
+    const [orderSummaryVisible, setOrderSummaryVisible] = useState(false);
+
     const [showErrorMessages, setShowErrorMessages] = useState(false);
 
     const [primaryEmail, setPrimaryEmail] = useState<string>();
@@ -290,7 +292,37 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
 
     //     }
     // }, [primaryEmail]);
-
+ 
+    function summaryInformationJsx() {
+        return <>
+            <div className={styles.eventImage}>
+                <Image src={images.event_flyer} alt="Flyer" />
+            </div>
+            <h3>Order summary</h3>
+            <div className={styles.summaryInfo}>
+                <div className={styles.summaryInfo__ticket}>
+                    <span>3 x Regular</span>
+                    <span className={styles.value}>&#8358;{(9000).toLocaleString()}</span>
+                </div>
+                <div className={styles.summaryInfo__ticket}>
+                    <span>3 x Premium</span>
+                    <span className={styles.value}>&#8358;{(12000).toLocaleString()}</span>
+                </div>
+                <div className={styles.summaryInfo__subs}>
+                    <span>Subtotal</span>
+                    <span className={styles.value}>&#8358;{(21000).toLocaleString()}</span>
+                </div>
+                <div className={styles.summaryInfo__subs}>
+                    <span>Discount (5% off)</span>
+                    <span className={styles.value}>-&nbsp;&#8358;{(1050).toLocaleString()}</span>
+                </div>
+                <div className={styles.summaryInfo__subs}>
+                    <span>Total</span>
+                    <span className={styles.value}>&#8358;{(19950).toLocaleString()}</span>
+                </div>
+            </div>
+        </>
+    }
 
     return (
         <>
@@ -480,7 +512,7 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
                                     <div className={styles.inputContainer}>
                                         <input type="text" value={couponCodeValue} maxLength={10}
                                             onChange={(e) => {
-                                                setCouponCodeValue(e.target.value)
+                                                setCouponCodeValue(e.target.value.trim())
                                                 setCodeValidationStatus(ValidationStatus.NotInitiated)
                                             }} placeholder="Enter coupon code" />
                                         <button className={canCodeBeValidated ? styles.active : ''} style={isValidating ? { opacity: 0.5, pointerEvents: 'none', backgroundColor: '#111111' } : {}} onClick={() => checkCoupon()}>{isValidating ? 'Checking...' : 'Apply'}</button>
@@ -489,45 +521,23 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
                                     {codeValidationStatus === ValidationStatus.Invalid && <span id={styles.invalid}><CloseIcon /> Invalid code. Please verify code, and try again</span>}
                                 </div>
                             </div>
-                            <div className={styles.bottomArea}>
-                                <p>5 tickets selected</p>
-                                <span>
-                                    <span>Total Price</span>
-                                    <span className={styles.amount}>&#8358;<span>{(19950).toLocaleString()}</span></span>
-                                </span>
-                            </div>
+                            {!onMobile &&
+                                <div className={styles.bottomArea}>
+                                    <p>5 tickets selected</p>
+                                    <span>
+                                        <span>Total Price</span>
+                                        <span className={styles.amount}>&#8358;<span>{(19950).toLocaleString()}</span></span>
+                                    </span>
+                                </div>}
+                            {onMobile &&
+                                <div className={styles.viewOrderSummaryBtn}>
+                                    {orderSummaryVisible ? <button onClick={() => setOrderSummaryVisible(false)}>Close Order Summary</button> :
+                                    <button onClick={() => setOrderSummaryVisible(true)}>View Order Summary</button>}
+                                </div>}
                         </div>
                         <div className={styles.rhs}>
-                            <div className={styles.eventImage}>
-                                <Image src={images.event_flyer} alt="Flyer" />
-                            </div>
-                            <h3>Order summary</h3>
-                            <div className={styles.summaryInfo}>
-                                <div className={styles.summaryInfo__ticket}>
-                                    <span>3 x Regular</span>
-                                    <span className={styles.value}>&#8358;{(9000).toLocaleString()}</span>
-                                </div>
-                                {/* <div className={styles.summaryInfo__ticket}>
-                            <span>3 x Premium</span>
-                            <span className={styles.value}>&#8358;{(12000).toLocaleString()}</span>
-                        </div> */}
-                                <div className={styles.summaryInfo__ticket}>
-                                    <span>3 x Premium</span>
-                                    <span className={styles.value}>&#8358;{(12000).toLocaleString()}</span>
-                                </div>
-                                <div className={styles.summaryInfo__subs}>
-                                    <span>Subtotal</span>
-                                    <span className={styles.value}>&#8358;{(21000).toLocaleString()}</span>
-                                </div>
-                                <div className={styles.summaryInfo__subs}>
-                                    <span>Discount (5% off)</span>
-                                    <span className={styles.value}>-&nbsp;&#8358;{(1050).toLocaleString()}</span>
-                                </div>
-                                <div className={styles.summaryInfo__subs}>
-                                    <span>Total</span>
-                                    <span className={styles.value}>&#8358;{(19950).toLocaleString()}</span>
-                                </div>
-                            </div>
+                            {!onMobile && summaryInformationJsx()}
+                            {onMobile && orderSummaryVisible && summaryInformationJsx()}
                             <div className={styles.actionButtons}>
                                 <button onClick={() => setVisibility(false)}>Cancel</button>
                                 <button onClick={() => validateFields()}>Pay now</button>
