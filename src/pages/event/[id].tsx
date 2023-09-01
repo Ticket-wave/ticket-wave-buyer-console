@@ -140,7 +140,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
         // Clear previous info
         setEventInfo(undefined);
         setEventTicketTypes(undefined);
-        setTicketDeliveryModalIsVisible(false);
+        setTicketsSelectionContainerIsVisible(false);
 
         if (router.isReady) {
             const _eventInfo = events.find((event) => event.id === eventId);
