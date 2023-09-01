@@ -15,6 +15,7 @@ import useResponsive from '@/hooks/useResponsiveness copy';
 import Link from 'next/link';
 import { Link as ScrollLink } from 'react-scroll';
 import TicketDelivery from '@/components/Modal/TicketDelivery';
+import SkeletonEventInfo from '@/components/Skeletons/SkeletonEventInfo';
 
 interface EventDetailsProps {
 
@@ -136,11 +137,18 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
     }
 
     useEffect(() => {
+        // Clear previous info
+        setEventInfo(undefined);
+        setEventTicketTypes(undefined);
+        setTicketDeliveryModalIsVisible(false);
+
         if (router.isReady) {
             const _eventInfo = events.find((event) => event.id === eventId);
             if (_eventInfo) {
                 console.log(_eventInfo);
-                setEventInfo(_eventInfo);
+                setTimeout(() => {
+                    setEventInfo(_eventInfo);
+                }, 3000);
                 // toasthandler?.logSuccess('Success', 'Event info retrieved!')
             } else {
                 // Route to flight not-found page
@@ -345,7 +353,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                                             <p>{totalSelectedTicketsCount} {totalSelectedTicketsCount > 1 ? 'tickets' : 'ticket'} selected</p>
                                             <div className={styles.price}>
                                                 <p>Total Price:</p>
-                                                <h1>&#8358;{totalPrice.toLocaleString()}</h1>
+                                                <h1>&#8358;{totalPrice?.toLocaleString()}</h1>
                                             </div>
                                         </div>
                                         <button onClick={() => setTicketDeliveryModalIsVisible(true)}>Purchase {totalSelectedTicketsCount > 1 ? 'tickets' : 'ticket'}</button>
@@ -368,9 +376,8 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                                 </div>}
                         </div>
                     </section> :
-                    <section className={styles.eventInfoContainer}>
-                        Loading...
-                    </section>}
+                    <SkeletonEventInfo />
+                }
                 <EventsGroup title='Similar Events' subText='Dear superstar, below is a list of all events available at the moment.' eventsData={events} />
             </div>
         </>
