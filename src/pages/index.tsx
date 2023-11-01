@@ -9,11 +9,18 @@ import CreateEvent from '@/components/Homepage/CreateEvent'
 
 export default function Home() {
     return (
-        <div className={styles.homepage}>
-            <HeroSection />
-            <FeaturedEvents />
-            <Services />
-            <CreateEvent />
-        </div>
+        <>
+        <Head>
+            <title>Ticket wave web application</title>
+            <meta name="description" content="Ticket wave web application" />
+            {/* Add other common metadata here */}
+        </Head>
+            <div className={styles.homepage}>
+                <HeroSection />
+                <FeaturedEvents />
+                <Services />
+                <CreateEvent />
+            </div>
+        </>
     )
 }
