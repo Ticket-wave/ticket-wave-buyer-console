@@ -9,7 +9,7 @@ import { NextSeo } from 'next-seo'
 export default function Home() {
     return (
         <>
-            <NextSeo
+            {/* <NextSeo
                 title="Your Title"
                 description="This is a demo description"
                 canonical="https://www.example.com"
@@ -42,7 +42,7 @@ export default function Home() {
                     site: '@site',
                     cardType: 'summary_large_image',
                 }}
-            />
+            /> */}
             {/* <Head>
                 <title>Ticket wave web application</title>
                 <meta name="description" content="Ticket wave web application" />
