@@ -14,7 +14,7 @@ export default function Home() {
                 {/* Add other common metadata here */}
                 <meta property="og:title" content="Social Title for Cool Page" />
                 <meta property="og:description" content="And a social description for our cool page" />
-                <meta property="og:image" content="https://example.com/images/cool-page.jpg" />
+                <meta property="og:image" content="../../public/images/event_flyer.jpg" />
             </Head>
             <div className={styles.homepage}>
                 <HeroSection />
