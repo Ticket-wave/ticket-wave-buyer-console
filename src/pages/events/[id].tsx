@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement, useEffect, useState, useContext } from 'react';
-import styles from "../../styles/EventDetails.module.scss";
+import styles from "@/styles/EventDetails.module.scss";
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { CalenderIcon, HeartIcon, ShareIcon } from '@/components/SVGs/SVGicons';

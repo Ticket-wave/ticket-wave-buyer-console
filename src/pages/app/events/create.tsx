@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement } from "react";
-import styles from '../../styles/CreateEvent.module.scss';
+import styles from '@/styles/CreateEvent.module.scss';
 
 interface CreateEventProps {
 
