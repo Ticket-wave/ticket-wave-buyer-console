@@ -4,8 +4,8 @@ export default function Document() {
     return (
         <Html lang="en">
             <Head>
-                <title>Ticket wave web application</title>
-                <meta name="description" content="Ticket wave web application" />
+                {/* <title>Ticket wave web application</title>
+                    <meta name="description" content="Ticket wave web application" />
 
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,7 +25,7 @@ export default function Document() {
                 <meta name="twitter:description" content="Application description" />
                 <meta name="twitter:image" content="https://ticketwave.netlify.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fevent_flyer.63358925.jpg&w=1920&q=75" />
 
-                <meta name="image" content="https://ticketwave.netlify.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fevent_flyer.63358925.jpg&w=1920&q=75" />
+                <meta name="image" content="https://ticketwave.netlify.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fevent_flyer.63358925.jpg&w=1920&q=75" /> */}
             </Head>
             <body>
                 <Main />
