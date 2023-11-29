@@ -67,9 +67,17 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
                                         {/* <Link href='/support' onClick={() => setNavbarIsVisible(false)}>
                                             <span className={router.pathname == '/support' ? styles.active : ''}>Support</span>
                                         </Link> */}
-                                        <Link href='/account' onClick={() => setNavbarIsVisible(false)}>
-                                            <span className={router.pathname == '/account' ? styles.active : ''}>Account</span>
-                                        </Link>
+                                        {user ? <>
+                                            <Link href='/account' onClick={() => setNavbarIsVisible(false)}>
+                                                <span className={router.pathname == '/account' ? styles.active : ''}>Account</span>
+                                            </Link>
+                                            <Link href='/api/auth/logout' onClick={() => setNavbarIsVisible(false)}>
+                                                <span>Log out</span>
+                                            </Link>
+                                        </> :
+                                            <Link href='/api/auth/login' onClick={() => setNavbarIsVisible(false)}>
+                                                <span className={router.pathname == '/account' ? styles.active : ''}>Login</span>
+                                            </Link>}
                                     </div>
                                 </div>
                             </div>}
