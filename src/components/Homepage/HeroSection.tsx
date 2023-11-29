@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, FunctionComponent, ReactElement, useEffect, useState, useRef } from 'react';
+import { ChangeEvent, FormEvent, FunctionComponent, ReactElement, useEffect, useState, useRef, Dispatch, SetStateAction } from 'react';
 import styles from '../../styles/Home.module.scss';
 import Image from 'next/image';
 import images from '../../../public/images';
@@ -12,6 +12,7 @@ import moment from "moment";
 import useOuterClick from '@/hooks/useOuterClick';
 import { scrollWindow } from '../PageScroll/ScrollWindow';
 import useResponsive from '@/hooks/useResponsiveness copy';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 interface HeroSectionProps {
 
@@ -21,6 +22,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
 
     const router = useRouter();
     const onMobile = useResponsive();
+    const { user, error, isLoading } = useUser();
 
     const imageList = [
         {
@@ -41,45 +43,20 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
         {
             img: images.ImageBg6,
         },
-        {
-            img: images.ImageBg7,
-        },
-        {
-            img: images.ImageBg8,
-        },
+        // {
+        //     img: images.ImageBg7,
+        // },
+        // {
+        //     img: images.ImageBg8,
+        // },
     ]
 
     const [heroSectionImgIndex, setHeroSectionImgIndex] = useState(0);
     const [eventName, setEventName] = useState<string>();
     const [eventNameErrorMsg, setEventNameErrorMsg] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
 
     const [searchResults, setSearchResults] = useState<Event[]>();
-    // const [filteredResults, setFilteredResults] = useState<Event[]>();
     const [searchResultsIsVisible, setSearchResultsIsVisible] = useState(false);
-
-    // async function handleEventSearch(e: FormEvent<HTMLFormElement>) {
-    //     e.preventDefault();
-
-    //     if (!eventName) {
-    //         // Show error msg 
-    //         setEventNameErrorMsg(true);
-    //         return;
-    //     }
-
-    //     // Close error msg
-    //     setEventNameErrorMsg(false);
-
-    //     // Spin up loader
-    //     setIsLoading(true);
-
-    //     // const _searchedEvent = events.find((event) => event.title.toLowerCase().includes(eventName.toLowerCase()));
-    //     // console.log(_searchedEvent);
-
-    //     // if (_searchedEvent) {
-    //     //     router.push(`/event/${_searchedEvent?.id}`);
-    //     // }
-    // }
 
     async function handleEventSearch(e: ChangeEvent<HTMLInputElement>) {
 
@@ -97,12 +74,21 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
             return;
         }
 
-        setSearchResultsIsVisible(true); 
+        setSearchResultsIsVisible(true);
         setSearchResults(events.filter(event => event.title.toLowerCase().includes(eventName.toLowerCase())));
+    };
+
+    function createEvent() {
+        // If user is not logged in 
+        if (user) {
+            router.push("app/event/create")
+        }
+        // Else, route to page to create event
+        router.push("login?r=0")
     }
 
     useEffect(() => {
-        if(eventName) {
+        if (eventName) {
             setSearchResults(events.filter((event) => event.title.toLowerCase().includes(eventName.toLowerCase())));
         }
     }, [eventName]);
@@ -131,7 +117,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
     return (
         <section className={styles.heroSection}>
             <div className={styles.backgroundImage}>
-                <Image src={imageList[heroSectionImgIndex].img} alt='People partying' />
+                <Image src={imageList[heroSectionImgIndex].img} alt='People in event' fill />
             </div>
             <div className={styles.heroSection__lhs}>
                 <div className={styles.textContents}>
@@ -142,7 +128,11 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                     <Link href={`/events`}>
                         <button className={styles.primaryButton}>Explore Events</button>
                     </Link>
-                    <button className={styles.secondaryButton}>Host Event</button>
+                    <button
+                        className={styles.secondaryButton}
+                        onClick={createEvent}>
+                        Create Event
+                    </button>
                 </div>
             </div>
             <div className={styles.heroSection__rhs}>
@@ -159,7 +149,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                                 placeholder='Event name'
                                 onClick={() => onMobile ? scrollWindow(160) : {}}
                                 onChange={(e) => {
-                                    if(e.target.value.length == 1) {
+                                    if (e.target.value.length == 1) {
                                         setEventName(e.target.value);
                                         setSearchResultsIsVisible(true);
                                         return;

@@ -47,8 +47,8 @@ const Footer: FunctionComponent<FooterProps> = (): ReactElement => {
                 <h4>Plan Events</h4>
                 <div className={styles.content__links}>
                     <li>Create Events</li>
-                    <li>Sell Tickets</li>
-                    <li>Online Events</li>
+                    <li>Buy Tickets</li>
+                    {/* <li>Online Events</li> */}
                 </div>
             </div>
             <div className={`${styles.content} ${styles.content2}`}>
@@ -56,10 +56,10 @@ const Footer: FunctionComponent<FooterProps> = (): ReactElement => {
                 <div className={styles.content__links}>
                     <li>About Us</li>
                     <li>Contact Us</li>
-                    <li>Help Center</li>
+                    {/* <li>Help Center</li>
                     <li>Privacy</li>
                     <li>Terms</li>
-                    <li>Blog</li>
+                    <li>Blog</li> */}
                 </div>
             </div>
             <div className={`${styles.content} ${styles.content3}`}>

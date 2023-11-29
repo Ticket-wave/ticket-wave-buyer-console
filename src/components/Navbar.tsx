@@ -7,6 +7,7 @@ import useOuterClick from '@/hooks/useOuterClick';
 import useResponsive from '@/hooks/useResponsiveness copy';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 interface NavbarProps {
 
@@ -14,12 +15,13 @@ interface NavbarProps {
 
 const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
 
+    const { user, error, isLoading } = useUser();
     const router = useRouter();
 
     const onMobile = useResponsive();
 
     const [navbarDropdownIsVisible, setNavbarDropdownIsVisible] = useState(false);
-    const [mobileNavbarIsVisible, setMobileNavbarIsVisible] = useState(false);
+    // const [mobileNavbarIsVisible, setMobileNavbarIsVisible] = useState(false);
     const [isLightTheme, setIsLightTheme] = useState(false);
 
     const navbarDropdownRef = useRef<HTMLDivElement>(null);
@@ -31,6 +33,7 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
     const navbarRef = useRef<HTMLDivElement>(null);
 
     // useRemoveHtmlElementFromDOM(navbarRef, navbarIsVisible, 600, "flex");
+    console.log(user);
 
     return (
         <>
@@ -58,9 +61,12 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
                                         <Link href='/events' onClick={() => setNavbarIsVisible(false)}>
                                             <span className={router.pathname == '/events' ? styles.active : ''}>Events</span>
                                         </Link>
-                                        <Link href='/support' onClick={() => setNavbarIsVisible(false)}>
-                                            <span className={router.pathname == '/support' ? styles.active : ''}>Support</span>
+                                        <Link href='/about' onClick={() => setNavbarIsVisible(false)}>
+                                            <span className={router.pathname == '/about' ? styles.active : ''}>About</span>
                                         </Link>
+                                        {/* <Link href='/support' onClick={() => setNavbarIsVisible(false)}>
+                                            <span className={router.pathname == '/support' ? styles.active : ''}>Support</span>
+                                        </Link> */}
                                         <Link href='/account' onClick={() => setNavbarIsVisible(false)}>
                                             <span className={router.pathname == '/account' ? styles.active : ''}>Account</span>
                                         </Link>
@@ -85,21 +91,35 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
                                 <Link href='/events'>
                                     <li>Events</li>
                                 </Link>
-                                <li>Support</li>
+                                <Link href='/about'>
+                                    <li>About</li>
+                                </Link>
+                                {/* <li>Support</li> */}
                             </ul>
-                            <div className={styles.accountSection} ref={navbarDropdownRef}>
-                                <div className={styles.profileCircle}>
-                                    <UserIcon />
-                                </div>
-                                <h3>Account</h3>
-                                <span className={styles.dropdownIcon} onClick={() => setNavbarDropdownIsVisible(!navbarDropdownIsVisible)}>
-                                    <CaretDownIcon />
-                                </span>
-                                {navbarDropdownIsVisible &&
-                                    <div className={styles.dropdownContainer}>
-                                        <span>My account</span>
-                                        <span>Log out</span>
-                                    </div>}
+                            <div className={styles.accountSection} ref={navbarDropdownRef} onClick={() => setNavbarDropdownIsVisible(!navbarDropdownIsVisible)}>
+                                {
+                                    user ? <>
+                                        <div className={styles.profileCircle}>
+                                            {<Image src={user?.picture as string} alt='Profile picture' fill /> ?? <UserIcon />}
+                                        </div>
+                                        <h3>{user?.name ?? 'Account'}</h3>
+                                        <span className={styles.dropdownIcon}>
+                                            <CaretDownIcon />
+                                        </span>
+                                        {
+                                            navbarDropdownIsVisible &&
+                                            <div className={styles.dropdownContainer}>
+                                                <span>My account</span>
+                                                <Link href='/api/auth/logout'>Log out</Link>
+                                            </div>
+                                        }
+                                    </>
+                                        : <Link href='/api/auth/login'>
+                                            <button>
+                                                Log in
+                                            </button>
+                                        </Link>
+                                }
                             </div>
                             <span className={styles.themeController}>
                                 {isLightTheme ? <MoonIcon /> : <SunIcon />}

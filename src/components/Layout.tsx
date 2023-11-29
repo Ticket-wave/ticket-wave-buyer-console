@@ -5,6 +5,7 @@ import Footer from './Footer';
 import { ToastContext } from '@/extensions/toast';
 import { ToastMessageType } from './models/ToastMessageType';
 import ToastCard from './Card/ToastCard';
+import Provider from './Provider';
 
 export const metadata: Metadata = {
     title: 'Ticket wave web application',
@@ -21,15 +22,17 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }): ReactElement => {
 
     return (
         <>
-            <ToastCard
-                visibility={toastContext?.toastOptions?.visible ?? false}
-                title={toastContext?.toastOptions?.title ?? 'Welcome'}
-                description={toastContext?.toastOptions?.description ?? ''}
-                messageType={toastContext?.toastOptions?.type ?? ToastMessageType.Info}
-                timeout={toastContext?.toastOptions?.timeout ?? 0.01} />
-            <Navbar />
-            {children}
-            <Footer />
+            <Provider>
+                <ToastCard
+                    visibility={toastContext?.toastOptions?.visible ?? false}
+                    title={toastContext?.toastOptions?.title ?? 'Welcome'}
+                    description={toastContext?.toastOptions?.description ?? ''}
+                    messageType={toastContext?.toastOptions?.type ?? ToastMessageType.Info}
+                    timeout={toastContext?.toastOptions?.timeout ?? 0.01} />
+                <Navbar />
+                {children}
+                <Footer />
+            </Provider>
         </>
     )
 }
