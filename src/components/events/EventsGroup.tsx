@@ -8,19 +8,23 @@ import { Event } from "../models/IEvent";
 import moment from "moment";
 import Link from "next/link";
 import EventCard from "../Event/EventCard";
+import { useRouter } from "next/router";
 
 interface EventsGroupProps {
     title: string
     subText: string
     eventsData: Event[]
+    consoleDisplay?: boolean
 }
 
-const EventsGroup: FunctionComponent<EventsGroupProps> = ({ title, subText, eventsData }): ReactElement => {
+const EventsGroup: FunctionComponent<EventsGroupProps> = (
+    { title, subText, eventsData, consoleDisplay }): ReactElement => {
 
     const onMobile = useResponsive();
+    const { push } = useRouter();
 
     return (
-        <section className={styles.allEvents}>
+        <section className={consoleDisplay ? styles.allUserEvents : styles.allEvents}>
             <div className={styles.topArea}>
                 <div className={styles.topArea__lhs}>
                     <div className={styles.main}>
@@ -30,13 +34,22 @@ const EventsGroup: FunctionComponent<EventsGroupProps> = ({ title, subText, even
                     <p>{subText}</p>
                 </div>
                 <div className={styles.topArea__rhs}>
-                    <button>Filter</button>
+                    {
+                        consoleDisplay ?
+                            <button onClick={() => { push('/app/event/create') }}>Create event</button> :
+                            <button>Filter</button>
+                    }
                 </div>
             </div>
             <div className={styles.eventsContainer}>
                 <div className={styles.eventsContainerCarousel}>
                     {eventsData.map((event, index) =>
-                        <EventCard event={event} mobileAndActionButtonDismiss key={index} />
+                        <EventCard
+                            event={event}
+                            mobileAndActionButtonDismiss
+                            key={index}
+                            consoleDisplay={consoleDisplay}
+                        />
                     )}
                 </div>
             </div>
