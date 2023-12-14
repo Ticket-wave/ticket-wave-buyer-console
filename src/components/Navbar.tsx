@@ -16,6 +16,7 @@ interface NavbarProps {
 const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
 
     const { user, error, isLoading } = useUser();
+    
     const router = useRouter();
 
     const onMobile = useResponsive();
@@ -33,7 +34,7 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
     const navbarRef = useRef<HTMLDivElement>(null);
 
     // useRemoveHtmlElementFromDOM(navbarRef, navbarIsVisible, 600, "flex");
-    console.log(user);
+    // console.log(user);
 
     return (
         <>
@@ -117,7 +118,8 @@ const Navbar: FunctionComponent<NavbarProps> = (): ReactElement => {
                                         {
                                             navbarDropdownIsVisible &&
                                             <div className={styles.dropdownContainer}>
-                                                <span>My account</span>
+                                                <Link href='/app'>Dashboard</Link>
+                                                <Link href='/app/profile'>Profile</Link>
                                                 <Link href='/api/auth/logout'>Log out</Link>
                                             </div>
                                         }
