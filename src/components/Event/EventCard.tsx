@@ -12,9 +12,11 @@ import { ToastContext } from "@/extensions/toast";
 interface EventCardProps {
     event: Event
     mobileAndActionButtonDismiss?: boolean
+    consoleDisplay?: boolean 
 }
 
-const EventCard: FunctionComponent<EventCardProps> = ({ event, mobileAndActionButtonDismiss }): ReactElement => {
+const EventCard: FunctionComponent<EventCardProps> = (
+    { event, mobileAndActionButtonDismiss, consoleDisplay }): ReactElement => {
 
     const onMobile = useResponsive();
     const toasthandler = useContext(ToastContext);
@@ -50,7 +52,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ event, mobileAndActionBu
             </div>
             <span className={styles.event__tag}>Latest</span>
             <div className={styles.event__image}>
-                <Link href={`/event/${event.id}`}>
+                <Link href={consoleDisplay ? `/app/event/${event.id}` : `/event/${event.id}`}>
                     <Image src={images.event_flyer} alt='Event flyer' />
                 </Link>
             </div>
@@ -87,7 +89,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ event, mobileAndActionBu
                     <p className={styles.restriction}>Everyone</p>
                 </div> */}
             </div>
-            <Link href={`/event/${event.id}`}>
+            <Link href={consoleDisplay ? `/app/event/${event.id}` : `/event/${event.id}`}>
                 <button>View details</button>
             </Link>
         </div>
