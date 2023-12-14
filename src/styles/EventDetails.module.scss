@@ -10,7 +10,7 @@
     font-size: $font-size-18;
 }
 
-.eventDetailsPage {
+.eventDetailsPage, .userEventDetailsPage {
     color: $white;
     background-color: $dark-grey;
 
@@ -444,5 +444,19 @@
                 }
             }
         }
+    }
+}
+
+.userEventDetailsPage {
+    min-height: calc(100vh - 3.125rem);
+    .heroSection {
+        .textContents {
+            padding-right: 1.5rem;
+            padding-left: 1.5rem;
+        }
+    }
+    .eventInfoContainer {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
 }

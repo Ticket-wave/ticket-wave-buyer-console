@@ -2,7 +2,7 @@
 @import "./reusables";
 
 
-.allEvents {
+.allEvents, .allUserEvents {
     @include sectionPadding;
     padding-top: 4.5rem;
     padding-bottom: 4.5rem;
@@ -29,6 +29,7 @@
         width: 100%;
 
         &__lhs {
+            width: 50%;
             .main {
                 display: flex;
                 align-items: center;
@@ -274,4 +275,11 @@
             // }
         }
     }
+}
+
+.allUserEvents {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
 }

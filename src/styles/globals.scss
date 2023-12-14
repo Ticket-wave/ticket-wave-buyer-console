@@ -187,6 +187,21 @@ img {
     }
 }
 
+.appLayout {
+    height: 100vh;
+    overflow: hidden;
+    &__body {
+        display: flex;
+        .innerBody {
+            padding: 1.25rem;
+            background-color: $dark-grey-2;
+            color: $white;
+            overflow-y: auto;
+            max-height: calc(100vh - 3.125rem);
+        }
+    }
+}
+
 
 .bodyNoScroll {
     // position: fixed;
