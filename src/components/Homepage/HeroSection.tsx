@@ -81,10 +81,14 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
     function createEvent() {
         // If user is not logged in 
         if (user) {
-            router.push("app/event/create")
+            // Route to page to create event
+            router.push("app/event/create");
+            // Do nothing afterwards...
+            return;
         }
         // Else, route to page to create event
-        router.push("login?r=0")
+        router.push("/api/auth/login")
+        // router.push("login?r=0")
     }
 
     useEffect(() => {
