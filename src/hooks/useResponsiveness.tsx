@@ -1,24 +1,35 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from 'react';
 
-export default function useIsWithin768px(): boolean {
+const useResponsiveness = () => {
+	const isSSR = typeof window === 'undefined';
 
-    const [isWithin768px, setIsWithin768px] = useState(() => window.innerWidth <= 768);
-    // const [isWithin768px, setIsWithin768px] = useState(false);
+	const [windowSize, setWindowSize] = useState<{width: number | undefined, height: number | undefined}>({
+		width: isSSR ? undefined : window.innerWidth,
+		height: isSSR ? undefined : window.innerHeight,
+	});
 
-    useEffect(() => {
-        function handleResize() {
-            setIsWithin768px(window.innerWidth <= 768);
+	const changeWindowSize = () => {
+		setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+	};
+
+	useEffect(() => {
+        if(isSSR) return;
+        
+        // If the document is loaded
+        if(document.readyState) {
+            changeWindowSize();
         }
 
-        if (typeof window !== "undefined") {
-            setIsWithin768px(window.innerWidth <= 768);
-            window.addEventListener('resize', handleResize);
+		window.addEventListener('load', changeWindowSize);
+		window.addEventListener('resize', changeWindowSize);
 
-            return () => {
-                window.removeEventListener('resize', handleResize);
-            };
-        }
-    }, []);
+		return () => {
+            window.removeEventListener('load', changeWindowSize);
+			window.removeEventListener('resize', changeWindowSize);
+		};
+	}, [isSSR]);
 
-    return isWithin768px;
-}
+	return windowSize;
+};
+
+export default useResponsiveness;

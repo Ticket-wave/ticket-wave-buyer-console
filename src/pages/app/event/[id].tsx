@@ -10,7 +10,7 @@ import { Event, RetrievedTicketType, TicketType } from '@/components/models/IEve
 import { ToastContext } from '@/extensions/toast';
 import moment from 'moment';
 import EventsGroup from '@/components/events/EventsGroup';
-import useResponsive from '@/hooks/useResponsiveness copy';
+import useResponsive from '@/hooks/useResponsiveness';
 import Link from 'next/link';
 import { Link as ScrollLink } from 'react-scroll';
 import TicketDelivery from '@/components/Modal/TicketDelivery';
@@ -24,7 +24,9 @@ interface EventDetailsProps {
 const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
 
     const router = useRouter();
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
     const eventId = router.query.id;
 
     const toasthandler = useContext(ToastContext);
@@ -312,7 +314,7 @@ const EventDetails: FunctionComponent<EventDetailsProps> = (): ReactElement => {
                                     </div>
                                 </Tooltip>
                                 <Tooltip tooltipText='Share event'>
-                                    <div className={styles.actionButton} style={{ backgroundColor: '#D5542A' }} onClick={() => onMobile ? shareEventMobile() : shareEvent()}>
+                                    <div className={styles.actionButton} style={{ backgroundColor: '#D5542A' }} onClick={() => typeof (onMobile) == "boolean" && onMobile ? shareEventMobile() : shareEvent()}>
                                         <ShareIcon />
                                     </div>
                                 </Tooltip>

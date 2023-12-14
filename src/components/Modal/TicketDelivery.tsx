@@ -7,7 +7,7 @@ import images from "../../../public/images";
 import { CheckIcon, CloseIcon, CloseMenuIcon, OutlineCheckIcon } from "../SVGs/SVGicons";
 import { ITicketPricing } from "../models/ITicketPricing";
 import { emailRegex } from "@/constants/emailRegex";
-import useResponsive from "@/hooks/useResponsiveness copy";
+import useResponsive from "@/hooks/useResponsiveness";
 import PanelWrapper from "./PanelWrapper";
 import { RetrievedTicketType } from "../models/IEvent";
 
@@ -31,7 +31,9 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
 
     const toastHandler = useContext(ToastContext);
 
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
 
     const [isInputActive, setIsInputActive] = useState(false);
     const [isLoading, setisLoading] = useState(false);
@@ -329,7 +331,7 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
 
     return (
         <>
-            {!onMobile &&
+            {typeof (onMobile) == "boolean" && !onMobile &&
                 <ModalWrapper disallowOverlayFunction visibility={visibility} setVisibility={setVisibility} styles={{ backgroundColor: 'transparent', color: '#fff' }}>
                     <div className={styles.ticketDeliveryContainer}>
                         <div className={styles.lhs}>
@@ -458,7 +460,7 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
                 </ModalWrapper>
             }
             {
-                onMobile &&
+                typeof (onMobile) == "boolean" && onMobile &&
                 <PanelWrapper
                     visibility={visibility}
                     setVisibility={setVisibility}
@@ -530,7 +532,7 @@ const TicketDelivery: FunctionComponent<TicketDeliveryProps> = ({ visibility, se
                             </div>
                         </div>
                         <div className={styles.rhs}>
-                            {onMobile && orderSummaryVisible &&
+                            {typeof (onMobile) == "boolean" && onMobile && orderSummaryVisible &&
                                 <>
                                     <div className={styles.eventImage}>
                                         <Image src={images.event_flyer} alt="Flyer" />

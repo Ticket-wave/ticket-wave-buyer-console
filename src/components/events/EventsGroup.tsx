@@ -3,7 +3,7 @@ import { HorizontalLineIcon, LikeIcon, LocationPinIcon, ShareIcon } from "../SVG
 import Image from "next/image";
 import images from "../../../public/images";
 import styles from '../../styles/EventGroupSection.module.scss';
-import useResponsive from "@/hooks/useResponsiveness copy";
+import useResponsive from "@/hooks/useResponsiveness";
 import { Event } from "../models/IEvent";
 import moment from "moment";
 import Link from "next/link";
@@ -20,7 +20,9 @@ interface EventsGroupProps {
 const EventsGroup: FunctionComponent<EventsGroupProps> = (
     { title, subText, eventsData, consoleDisplay }): ReactElement => {
 
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
     const { push } = useRouter();
 
     return (

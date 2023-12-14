@@ -34,7 +34,7 @@ const Topbar: FunctionComponent<TopbarProps> = (): ReactElement => {
                         <div className={styles.accountContainer__image}>
                             <Image src={user?.picture ?? images.user_avatar} fill alt="Profile" />
                         </div>
-                        <h3>{user?.nickname}</h3>
+                        <h3>{user?.name ?? user?.nickname}</h3>
                     </div>
                 </Link>
             </div>

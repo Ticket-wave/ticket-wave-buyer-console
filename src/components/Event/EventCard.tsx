@@ -3,7 +3,7 @@ import { FunctionComponent, ReactElement, useContext } from "react";
 import { HorizontalLineIcon, LikeIcon, LocationPinIcon, ShareIcon } from "../SVGs/SVGicons";
 import Image from "next/image";
 import images from "../../../public/images";
-import useResponsive from "@/hooks/useResponsiveness copy";
+import useResponsive from "@/hooks/useResponsiveness";
 import styles from "../../styles/EventCard.module.scss";
 import moment from "moment";
 import { Event } from "../models/IEvent";
@@ -18,7 +18,9 @@ interface EventCardProps {
 const EventCard: FunctionComponent<EventCardProps> = (
     { event, mobileAndActionButtonDismiss, consoleDisplay }): ReactElement => {
 
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
     const toasthandler = useContext(ToastContext);
 
     function shareEvent() {
@@ -77,14 +79,14 @@ const EventCard: FunctionComponent<EventCardProps> = (
                     <div className={styles.eventInfo__rhs}>
                         <div className={styles.actions}>
                             <button className={styles.actions__like}><LikeIcon /></button>
-                            <button className={styles.actions__share} onClick={() => onMobile ? shareEventMobile() : shareEvent()}><ShareIcon /></button>
+                            <button className={styles.actions__share} onClick={() => typeof (onMobile) == "boolean" && onMobile ? shareEventMobile() : shareEvent()}><ShareIcon /></button>
                         </div>
                         <p className={styles.restriction}>Everyone</p>
                     </div>}
                 {/* <div className={styles.eventInfo__rhs}>
                     <div className={styles.actions}>
                         <button className={styles.actions__like}><LikeIcon /></button>
-                        <button className={styles.actions__share} onClick={() => onMobile ? shareEventMobile() : shareEvent(event)}><ShareIcon /></button>
+                        <button className={styles.actions__share} onClick={() => typeof (onMobile) == "boolean" && onMobile ? shareEventMobile() : shareEvent(event)}><ShareIcon /></button>
                     </div>
                     <p className={styles.restriction}>Everyone</p>
                 </div> */}

@@ -11,7 +11,7 @@ import Link from 'next/link';
 import moment from "moment";
 import useOuterClick from '@/hooks/useOuterClick';
 import { scrollWindow } from '../PageScroll/ScrollWindow';
-import useResponsive from '@/hooks/useResponsiveness copy';
+import useResponsive from '@/hooks/useResponsiveness';
 import { useUser } from '@auth0/nextjs-auth0/client';
 
 interface HeroSectionProps {
@@ -21,7 +21,9 @@ interface HeroSectionProps {
 const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
 
     const router = useRouter();
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
     const { user, error, isLoading } = useUser();
 
     const imageList = [
@@ -151,7 +153,7 @@ const HeroSection: FunctionComponent<HeroSectionProps> = (): ReactElement => {
                                 type="text"
                                 value={eventName}
                                 placeholder='Event name'
-                                onClick={() => onMobile ? scrollWindow(160) : {}}
+                                onClick={() => typeof (onMobile) == "boolean" && onMobile ? scrollWindow(160) : {}}
                                 onChange={(e) => {
                                     if (e.target.value.length == 1) {
                                         setEventName(e.target.value);

@@ -6,7 +6,7 @@ import { CloseMenuIcon, OutlineCheckIcon, OutlineCloseIcon, OutlineInfoIcon, Out
 // import useResponsive from "../../hooks/useResponsiveness";
 import { ToastContext } from "../../extensions/toast";
 import { ToastMessageType } from "../models/ToastMessageType";
-import useResponsive from "@/hooks/useResponsiveness copy";
+import useResponsive from "@/hooks/useResponsiveness";
 
 interface ToastCardProps {
     visibility: Boolean;
@@ -18,7 +18,9 @@ interface ToastCardProps {
 
 function SuccessCard(props: { messageTitle: string | number | boolean; messageInfo: string | number | boolean; }) {
 
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
 
     //States for cards visibility
     const [visible, setVisibility] = useState(false);
@@ -41,7 +43,7 @@ function SuccessCard(props: { messageTitle: string | number | boolean; messageIn
         }
     }
     return (
-        <div className={onMobile ? `${styles.toastCard} ${styles.successCard} ${hide()} ` : `${styles.toastCardMobile} ${styles.successCardMobile} ${hide()} `}>
+        <div className={typeof (onMobile) == "boolean" && onMobile ? `${styles.toastCard} ${styles.successCard} ${hide()} ` : `${styles.toastCardMobile} ${styles.successCardMobile} ${hide()} `}>
             <div className={styles.toastCard__messageType}>
                 <div className={styles.indicatorSuccess}>
                     <div className={styles.indicatorSuccess__box}>

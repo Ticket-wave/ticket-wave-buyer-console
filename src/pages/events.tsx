@@ -4,7 +4,7 @@ import FeaturedEvents from "@/components/Homepage/FeaturedEvents";
 import Image from "next/image";
 import images from "../../public/images";
 import { CaretLeftIcon, CaretRightIcon, HorizontalLineIcon, LikeIcon, LocationPinIcon, ShareIcon } from "@/components/SVGs/SVGicons";
-import useResponsive from "@/hooks/useResponsiveness copy";
+import useResponsive from "@/hooks/useResponsiveness";
 import { events } from "@/components/demoData/Events";
 import EventsGroup from "@/components/events/EventsGroup";
 
@@ -14,7 +14,9 @@ interface AllEventsProps {
 
 const AllEvents: FunctionComponent<AllEventsProps> = (): ReactElement => {
 
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
 
     return (
         <div className={styles.allEventsPage}>

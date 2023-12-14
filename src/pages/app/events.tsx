@@ -1,7 +1,7 @@
 import { FunctionComponent, ReactElement } from "react";
 import styles from "@/styles/Events.module.scss";
 import FeaturedEvents from "@/components/Homepage/FeaturedEvents";
-import useResponsive from "@/hooks/useResponsiveness copy";
+import useResponsive from "@/hooks/useResponsiveness";
 import { events } from "@/components/demoData/Events";
 import EventsGroup from "@/components/events/EventsGroup";
 
@@ -11,7 +11,9 @@ interface AllEventsProps {
 
 const AllEvents: FunctionComponent<AllEventsProps> = (): ReactElement => {
 
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
 
     return (
         <div className={`${styles.allEventsPage} ${styles.allEventsPageConsole}`}>

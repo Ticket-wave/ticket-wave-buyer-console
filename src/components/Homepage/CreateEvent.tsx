@@ -2,20 +2,22 @@ import { FunctionComponent, ReactElement } from 'react';
 import styles from '../../styles/Home.module.scss';
 import Image from 'next/image';
 import images from '../../../public/images';
-import useResponsive from '@/hooks/useResponsiveness copy';
+import useResponsive from '@/hooks/useResponsiveness';
 
 interface CreateEventProps {
 
 }
 
 const CreateEvent: FunctionComponent<CreateEventProps> = (): ReactElement => {
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
 
     return (
         <section className={styles.createEventSection}>
             <div className={styles.createEventSection__lhs}>
                 <div className={styles.image}>
-                    {onMobile ? <Image src={images.createImageMobile} alt='Create image' /> : <Image src={images.createImage} alt='Create image' />}
+                    {typeof (onMobile) == "boolean" && onMobile ? <Image src={images.createImageMobile} alt='Create image' /> : <Image src={images.createImage} alt='Create image' />}
                 </div>
             </div>
             <div className={styles.createEventSection__rhs}>

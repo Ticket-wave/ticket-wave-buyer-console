@@ -9,7 +9,7 @@ import moment from 'moment';
 import Tooltip from '../custom/Tooltip';
 import { ToastContext } from '@/extensions/toast';
 import { Event } from '../models/IEvent';
-import useResponsive from '@/hooks/useResponsiveness copy';
+import useResponsive from '@/hooks/useResponsiveness';
 import EventCard from '../Event/EventCard';
 
 interface FeaturedEventsProps {
@@ -19,7 +19,9 @@ interface FeaturedEventsProps {
 const FeaturedEvents: FunctionComponent<FeaturedEventsProps> = ({ isNotHomepage }): ReactElement => {
 
     const toasthandler = useContext(ToastContext);
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
 
     function shareEvent(eventInfo: Event) {
         const eventURL = window.location.href;

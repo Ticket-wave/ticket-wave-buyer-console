@@ -4,14 +4,16 @@ import Shimmer from "./Shimmer";
 import styles from "../../styles/skeleton.module.scss";
 import SkeletonElement from "./SkeletonElement";
 import { SkeletonTypes } from "./SkeletonTypes";
-import useResponsive from "@/hooks/useResponsiveness copy";
+import useResponsive from "@/hooks/useResponsiveness";
 
 interface SkeletonEventInfoProps {
 
 }
 
 const SkeletonEventInfo: FunctionComponent<SkeletonEventInfoProps> = (): ReactElement => {
-    const onMobile = useResponsive();
+    
+    const windowRes = useResponsive();
+    const onMobile = windowRes.width && windowRes.width < 768;
 
     return (
         <section className={styles.eventInfoContainer}>
@@ -23,7 +25,7 @@ const SkeletonEventInfo: FunctionComponent<SkeletonEventInfoProps> = (): ReactEl
                 <span className={styles.tag}><SkeletonElement type={SkeletonTypes.title} style={{ margin: '0', height: '100%', width: '100%' }} /></span>
                 <div className={styles.eventDetails}>
                     <div className={styles.leftInfo}>
-                        <SkeletonElement type={SkeletonTypes.title} style={onMobile ? { marginTop: '8px', width: '100%' } : { marginTop: '0' }} />
+                        <SkeletonElement type={SkeletonTypes.title} style={typeof (onMobile) == "boolean" && onMobile ? { marginTop: '8px', width: '100%' } : { marginTop: '0' }} />
                         {/* <SkeletonElement type={SkeletonTypes.text} style={{ width: '35%' }} /> */}
                         <div className={styles.publisherInfo}>
                             <div className={styles.publisherInfo__image}>
